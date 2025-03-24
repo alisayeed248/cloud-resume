@@ -1,0 +1,48 @@
+name: Deploy Resume Website
+
+on:
+  push:
+    branches:
+      - dev 
+    paths:
+      - 'frontend/index.html' # Triggers on index.html changes
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 1.5.0
+
+    - name: Set up AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}  
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws_region: us-east-1
+
+    - name: Terraform Init
+      working-directory: ./terraform
+      run: terraform init
+
+    - name: Terraform Validate
+      working-directory: ./terraform
+      run: terraform validate
+
+    - name: Terraform Plan
+      working-directory: ./terraform
+      run: terraform plan
+
+    - name: Upload index.html to S3
+      run: |
+        aws s3 cp frontend/index.html s3://sayeedali-resumesite-prod/index.html
+
+    - name: Terraform Apply
+      working-directory: ./terraform
+      run: terraform apply -auto-approve
