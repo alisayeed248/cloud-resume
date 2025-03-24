@@ -7,6 +7,10 @@ provider "aws" {
 # S3 bucket that hosts resume
 resource "aws_s3_bucket" "website_bucket" {
   bucket = "sayeedali-resumesite-prod"
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 # Disable block public access settings for this specific bucket
