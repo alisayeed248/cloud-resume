@@ -10,3 +10,9 @@ node_modules/
 
 # Ignore environment variables or secrets
 .env
+
+# Production build
+dist
+
+# VSCode settings
+.vscode/
