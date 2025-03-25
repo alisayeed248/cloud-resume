@@ -1,12 +1,15 @@
-import React from 'react'
-import './index.css'
+// src/App.jsx
+import React from 'react';
+import Navbar from './components/Navbar';
+import MainContent from './components/MainContent';
 
 function App() {
   return (
-    <div className="flex items-center justify-center h-screen w-screen">
-      <h1 className="text-3xl font-bold text-white">Hello, World!</h1>
+    <div className="flex h-screen w-screen">
+      <Navbar />
+      <MainContent />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
