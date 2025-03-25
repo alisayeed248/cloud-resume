@@ -19,7 +19,7 @@ To run the frontend locally, follow these steps:
 Clone the repository to your local machine:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/alisayeed248/cloud-resume.git
 ```
 
 ### 2. Install Dependencies
@@ -30,3 +30,17 @@ Navigate to the frontend folder and install the required dependencies:
 cd frontend
 npm install
 ```
+
+### 3. Configure Tailwind CSS
+
+```bash
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+```
+### 4. Build the project
+
+```bash
+npm run build
+```
+
+Place your dist/ build in an S3 bucket. 
