@@ -1,13 +1,13 @@
 // src/App.jsx
 import React from 'react';
 import Navbar from './components/Navbar';
-import MainContent from './components/MainContent';
+import AboutMe from './components/AboutMe';
 
 function App() {
   return (
-    <div className="flex h-screen w-screen">
+    <div className="h-screen w-screen bg-gray-900 flex flex-col md:flex-row">
       <Navbar />
-      <MainContent />
+      <AboutMe />
     </div>
   );
 }
