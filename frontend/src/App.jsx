@@ -1,13 +1,19 @@
 // src/App.jsx
-import React from 'react';
-import Navbar from './components/Navbar';
-import AboutMe from './components/AboutMe';
+import React from "react";
+import Navbar from "./components/Navbar";
+import AboutMe from "./components/AboutMe";
+import Education from "./components/Education";
+import Experience from "./components/Experience";
 
 function App() {
   return (
-    <div className="h-screen w-screen bg-gray-900 flex flex-col md:flex-row">
+    <div className="min-h-screen w-screen bg-gray-900 flex flex-col md:flex-row overflow-x-hidden">
       <Navbar />
-      <AboutMe />
+      <div className="flex-1 overflow-y-auto">
+        <AboutMe />
+        <Education />
+        <Experience />
+      </div>
     </div>
   );
 }

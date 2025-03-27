@@ -2,16 +2,20 @@ import React from "react";
 
 const AboutMe = () => {
   return (
-    <div className="flex-1 flex flex-col items-center md:items-start justify-center min-h-screen p-6 sm:p-10 md:p-14 w-full">
-      <div className="max-w-5xl w-full px-4 sm:px-6 md:px-14">
+    <div className="flex-1 w-full 
+      pl-16 sm:pl-20 md:pl-72 lg:pl-80 
+      pr-4 sm:pr-6 md:pr-8 lg:pr-14
+      pt-8 sm:pt-12 md:pt-16 lg:pt-20
+    ">
+      <div className="max-w-5xl w-full">
         <div className="text-white text-center md:text-left">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3">
             <span className="text-white">Hi, I'm </span>
             <span className="bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text">
               Sayeed Ali
             </span>
           </h2>
-          <p className="text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed">
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed">
             ... a passionate web developer currently building this resume
             serverless on AWS. I'm working with a variety of modern technologies
             including Terraform, S3, DynamoDB, API Gateway, Lambda, GitHub
@@ -23,11 +27,11 @@ const AboutMe = () => {
           </p>
         </div>
 
-        <div className="mt-12">
-          <h3 className="text-2xl sm:text-3xl font-bold text-white mb-6 text-center md:text-left">
+        <div className="mt-6 sm:mt-8 md:mt-10">
+          <h3 className="text-xl sm:text-2xl font-bold text-white mb-4 text-center md:text-left">
             Technologies & Experience
           </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
             {[
               {
                 title: "AWS",
@@ -47,12 +51,12 @@ const AboutMe = () => {
             ].map((item, index) => (
               <div
                 key={index}
-                className="bg-gray-800 p-4 sm:p-6 rounded-xl shadow-lg"
+                className="bg-gray-800 p-3 sm:p-4 rounded-lg"
               >
-                <h4 className="text-lg sm:text-xl font-semibold text-blue-400">
+                <h4 className="text-base sm:text-lg font-semibold text-blue-400">
                   {item.title}
                 </h4>
-                <p className="text-sm sm:text-base text-gray-300">
+                <p className="text-xs sm:text-sm text-gray-300">
                   {item.description}
                 </p>
               </div>
@@ -60,15 +64,15 @@ const AboutMe = () => {
           </div>
         </div>
 
-        <div className="mt-12">
-          <h3 className="text-2xl sm:text-3xl font-bold text-white mb-6 text-center md:text-left">
+        <div className="mt-6 sm:mt-8 md:mt-10">
+          <h3 className="text-xl sm:text-2xl font-bold text-white mb-4 text-center md:text-left">
             Download Resume & Links
           </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <a
               href="/resume.pdf"
               download
-              className="bg-blue-500 hover:bg-blue-600 text-white text-center py-3 sm:py-4 rounded-xl shadow-lg text-base sm:text-lg"
+              className="bg-blue-500 hover:bg-blue-600 text-white text-center py-2 sm:py-3 rounded-lg text-sm sm:text-base"
             >
               Download Resume
             </a>
@@ -76,15 +80,13 @@ const AboutMe = () => {
               href="https://github.com/alisayeed248"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-gray-800 hover:bg-gray-700 text-white text-center py-3 sm:py-4 rounded-xl shadow-lg text-base sm:text-lg"
+              className="bg-gray-800 hover:bg-gray-700 text-white text-center py-2 sm:py-3 rounded-lg text-sm sm:text-base"
             >
               GitHub Profile
             </a>
           </div>
         </div>
       </div>
-
-      <div className="w-full border-t border-gray-700 mt-12"></div>
     </div>
   );
 };

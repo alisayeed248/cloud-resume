@@ -3,7 +3,7 @@ import resumeImage from "../assets/resume_picture.jpg";
 
 const Navbar = () => {
   return (
-    <div className="w-72 bg-gray-800 text-white p-4 flex flex-col items-center justify-center h-screen">
+    <div className="fixed left-0 top-0 bottom-0 w-72 bg-gray-800 text-white p-4 flex flex-col items-center justify-center overflow-y-auto">
       <a href="#about">
         <div className="w-40 h-40 rounded-full overflow-hidden mb-8">
           <img
@@ -16,25 +16,25 @@ const Navbar = () => {
 
       <ul className="font-mono flex flex-col items-center space-y-6 text-lg">
         <li>
-          <a href="#about">ABOUT ME</a>
+          <a href="#about" className="hover:text-blue-400 transition-colors">ABOUT ME</a>
         </li>
         <li>
-          <a href="#education">EDUCATION</a>
+          <a href="#education" className="hover:text-blue-400 transition-colors">EDUCATION</a>
         </li>
         <li>
-          <a href="#experience">EXPERIENCE</a>
+          <a href="#experience" className="hover:text-blue-400 transition-colors">EXPERIENCE</a>
         </li>
         <li>
-          <a href="#projects">PROJECTS</a>
+          <a href="#projects" className="hover:text-blue-400 transition-colors">PROJECTS</a>
         </li>
         <li>
-          <a href="#hobbies">HOBBIES</a>
+          <a href="#hobbies" className="hover:text-blue-400 transition-colors">HOBBIES</a>
         </li>
         <li>
-          <a href="#BLOG">MY BLOG</a>
+          <a href="#blog" className="hover:text-blue-400 transition-colors">MY BLOG</a>
         </li>
         <li>
-          <a href="#contact">CONTACT</a>
+          <a href="#contact" className="hover:text-blue-400 transition-colors">CONTACT</a>
         </li>
       </ul>
     </div>
