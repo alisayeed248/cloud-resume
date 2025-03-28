@@ -2,7 +2,7 @@ import React from "react";
 
 const AboutMe = () => {
   return (
-    <div className="w-full p-6 md:p-8 lg:p-10">
+    <div className="min-h-screen w-full p-6 md:p-8 lg:p-10 flex flex-col justify-center">
       <div className="text-white text-left">
         <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3">
           <span className="text-white">Hi, I'm </span>
