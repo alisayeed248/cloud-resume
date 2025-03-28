@@ -9,10 +9,10 @@ function App() {
   return (
     <div className="min-h-screen w-screen bg-gray-900 flex flex-col md:flex-row overflow-x-hidden">
       <Navbar />
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto md:ml-72"> 
         <AboutMe />
-        <Education />
-        <Experience />
+        <Education/>
+        <Experience/>
       </div>
     </div>
   );
