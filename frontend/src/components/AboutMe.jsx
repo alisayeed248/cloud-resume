@@ -17,8 +17,7 @@ const AboutMe = () => {
           Actions, React, and Tailwind to create an efficient application. I
           would love for you to check it out and see how these tools come
           together to power my personal website. In my free time, I enjoy
-          learning new programming concepts and continually improving my
-          skills.
+          learning new programming concepts and continually improving my skills.
         </p>
       </div>
 

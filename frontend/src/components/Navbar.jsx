@@ -16,25 +16,45 @@ const Navbar = () => {
 
       <ul className="font-mono flex flex-col items-center space-y-6 text-lg">
         <li>
-          <a href="#about" className="hover:text-blue-400 transition-colors">ABOUT ME</a>
+          <a href="#about" className="hover:text-blue-400 transition-colors">
+            ABOUT ME
+          </a>
         </li>
         <li>
-          <a href="#education" className="hover:text-blue-400 transition-colors">EDUCATION</a>
+          <a
+            href="#education"
+            className="hover:text-blue-400 transition-colors"
+          >
+            EDUCATION
+          </a>
         </li>
         <li>
-          <a href="#experience" className="hover:text-blue-400 transition-colors">EXPERIENCE</a>
+          <a
+            href="#experience"
+            className="hover:text-blue-400 transition-colors"
+          >
+            EXPERIENCE
+          </a>
         </li>
         <li>
-          <a href="#projects" className="hover:text-blue-400 transition-colors">PROJECTS</a>
+          <a href="#projects" className="hover:text-blue-400 transition-colors">
+            PROJECTS
+          </a>
         </li>
         <li>
-          <a href="#hobbies" className="hover:text-blue-400 transition-colors">HOBBIES</a>
+          <a href="#hobbies" className="hover:text-blue-400 transition-colors">
+            HOBBIES
+          </a>
         </li>
         <li>
-          <a href="#blog" className="hover:text-blue-400 transition-colors">MY BLOG</a>
+          <a href="#blog" className="hover:text-blue-400 transition-colors">
+            MY BLOG
+          </a>
         </li>
         <li>
-          <a href="#contact" className="hover:text-blue-400 transition-colors">CONTACT</a>
+          <a href="#contact" className="hover:text-blue-400 transition-colors">
+            CONTACT
+          </a>
         </li>
       </ul>
     </div>
