@@ -111,7 +111,7 @@ resource "aws_lambda_function" "get_all_posts" {
   }
 }
 
-# Output values
+# Output values for resources
 output "website_url" {
   value = aws_s3_bucket_website_configuration.website_config.website_endpoint
 }
