@@ -42,7 +42,7 @@ const AboutMe = () => {
               { title: "Backend", description: "DynamoDB, Node.js, APIs" },
               {
                 title: "Experience",
-                description: "3+ years in web development",
+                description: "2 years in web development",
               },
             ].map((item, index) => (
               <div key={index} className="bg-gray-800 p-3 sm:p-4 rounded-lg">
