@@ -122,6 +122,12 @@ resource "aws_iam_role" "lambda_role" {
   })
 }
 
+# Attaches AWS managed policy for CloudWatch Logs
+resource "aws_iam_role_policy_attachment" "lambda_logs" {
+  role       = aws_iam_role.lambda_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
 # Policy for Lambda to access DynamoDB and CloudWatch logs
 resource "aws_iam_role_policy" "lambda_policy" {
   name = "blog_lambda_policy"
@@ -141,8 +147,8 @@ resource "aws_iam_role_policy" "lambda_policy" {
         ]
         Effect   = "Allow"
         Resource = [
-          aws_dynamodb_table.blog_posts.arn,
-          "${aws_dynamodb_table.blog_posts.arn}/index/*"
+          aws_dynamodb_table.blog_posts_table.arn,
+          "${aws_dynamodb_table.blog_posts_table.arn}/index/*"
         ]
       },
       {
@@ -185,7 +191,7 @@ resource "aws_lambda_function" "get_all_posts" {
   
   environment {
     variables = {
-      DYNAMODB_TABLE_NAME = aws_dynamodb_table.blog_posts.name
+      DYNAMODB_TABLE_NAME = aws_dynamodb_table.blog_posts_table.name
     }
   }
 }
