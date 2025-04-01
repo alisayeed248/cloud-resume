@@ -79,53 +79,6 @@ data "aws_iam_role" "lambda_role" {
   name = "blog_lambda_role"
 }
 
-# Check if the policy already exists
-data "aws_iam_role_policy" "existing_lambda_policy" {
-  role = data.aws_iam_role.lambda_role.name
-  name = "blog_lambda_policy"
-  
-  # This will fail silently if the policy doesn't exist
-  depends_on = [data.aws_iam_role.lambda_role]
-}
-
-# Policy for Lambda to access DynamoDB and CloudWatch logs
-resource "aws_iam_role_policy" "lambda_policy" {
-  count = data.aws_iam_role_policy.existing_lambda_policy.policy == null ? 1 : 0
-
-  name = "blog_lambda_policy"
-  role = aws_iam_role.lambda_role.id
-
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = [
-          "dynamodb:GetItem",
-          "dynamodb:PutItem",
-          "dynamodb:UpdateItem",
-          "dynamodb:DeleteItem",
-          "dynamodb:Scan",
-          "dynamodb:Query"
-        ]
-        Effect   = "Allow"
-        Resource = [
-          data.aws_dynamodb_table.blog_posts_table.arn,
-          "${data.aws_dynamodb_table.blog_posts_table.arn}/index/*"
-        ]
-      },
-      {
-        Action = [
-          "logs:CreateLogGroup",
-          "logs:CreateLogStream",
-          "logs:PutLogEvents"
-        ]
-        Effect   = "Allow"
-        Resource = "arn:aws:logs:*:*:*"
-      }
-    ]
-  })
-}
-
 # Create a directory for temporary files if it doesn't exist
 resource "local_file" "temp_dir" {
   content     = ""
