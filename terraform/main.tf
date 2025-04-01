@@ -117,7 +117,7 @@ resource "aws_iam_role_policy" "lambda_policy" {
         ]
         Effect   = "Allow"
         Resource = [
-          aws_dynamodb_table.blog_posts_table.arn,
+          data.aws_dynamodb_table.blog_posts_table.arn,
           "${data.aws_dynamodb_table.blog_posts_table.arn}/index/*"
         ]
       },
