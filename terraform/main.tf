@@ -96,19 +96,8 @@ data "archive_file" "get_all_posts_zip" {
 }
 
 # Lambda function that gets all posts
-resource "aws_lambda_function" "get_all_posts" {
+data "aws_lambda_function" "get_all_posts" {
   function_name    = "blog-get-all-posts"
-  role             = data.aws_iam_role.lambda_role.arn
-  handler          = "lambda_function.lambda_handler"
-  filename         = data.archive_file.get_all_posts_zip.output_path
-  source_code_hash = data.archive_file.get_all_posts_zip.output_base64sha256
-  runtime          = "python3.9"
-  
-  environment {
-    variables = {
-      DYNAMODB_TABLE_NAME = data.aws_dynamodb_table.blog_posts_table.name
-    }
-  }
 }
 
 # Output values for resources
