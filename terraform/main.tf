@@ -75,7 +75,7 @@ data "aws_dynamodb_table" "blog_posts_table" {
 }
 
 # IAM role for Lambda functions
-resource "aws_iam_role" "lambda_role" {
+data "aws_iam_role" "lambda_role" {
   name = "blog_lambda_role"
 
   assume_role_policy = jsonencode({
