@@ -92,14 +92,19 @@ resource "aws_iam_role" "lambda_role" {
   })
 }
 
-# Attaches AWS managed policy for CloudWatch Logs
-resource "aws_iam_role_policy_attachment" "lambda_logs" {
-  role       = aws_iam_role.lambda_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+# Check if the policy already exists
+data "aws_iam_role_policy" "existing_lambda_policy" {
+  role = data.aws_iam_role.lambda_role.name
+  name = "blog_lambda_policy"
+  
+  # This will fail silently if the policy doesn't exist
+  depends_on = [data.aws_iam_role.lambda_role]
 }
 
 # Policy for Lambda to access DynamoDB and CloudWatch logs
 resource "aws_iam_role_policy" "lambda_policy" {
+  count = data.aws_iam_role_policy.existing_lambda_policy.policy == null ? 1 : 0
+
   name = "blog_lambda_policy"
   role = aws_iam_role.lambda_role.id
 
@@ -153,7 +158,7 @@ data "archive_file" "get_all_posts_zip" {
 # Lambda function that gets all posts
 resource "aws_lambda_function" "get_all_posts" {
   function_name    = "blog-get-all-posts"
-  role             = aws_iam_role.lambda_role.arn
+  role             = data.aws_iam_role.lambda_role.arn
   handler          = "lambda_function.lambda_handler"
   filename         = data.archive_file.get_all_posts_zip.output_path
   source_code_hash = data.archive_file.get_all_posts_zip.output_base64sha256
