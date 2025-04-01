@@ -69,7 +69,45 @@ resource "aws_s3_bucket_policy" "website_policy" {
   })
 }
 
+resource "aws_dynamodb_table" "blog_posts_table" {
+  name = "BlogPosts"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key = "postId"
+
+  attribute {
+    name = "postId"
+    type = "S"
+  }
+
+  attribute {
+    name = "category"
+    type = "S"
+  }
+
+  attribute {
+    name = "createdAt"
+    type = "S"
+  }
+
+  global_secondary_index {
+    name = "CategoryIndex"
+    hash_key = "category"
+    range_key = "createdAt"
+    projection_type = "ALL"
+  }
+
+  tags = {
+    Name = "blog-posts-table"
+    Environment = "production"
+    Project = "portfolio"
+  }
+}
+
 # Output values
 output "website_url" {
   value = aws_s3_bucket_website_configuration.website_config.website_endpoint
+}
+
+output "blog_posts_table_name" {
+  value = aws_dynamodb_table.blog_posts_table.name
 }
