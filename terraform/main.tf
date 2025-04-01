@@ -70,38 +70,8 @@ resource "aws_s3_bucket_policy" "website_policy" {
 }
 
 # DynamoDB table for blog posts
-resource "aws_dynamodb_table" "blog_posts_table" {
+data "aws_dynamodb_table" "blog_posts_table" {
   name = "BlogPosts"
-  billing_mode = "PAY_PER_REQUEST"
-  hash_key = "postId"
-
-  attribute {
-    name = "postId"
-    type = "S"
-  }
-
-  attribute {
-    name = "category"
-    type = "S"
-  }
-
-  attribute {
-    name = "createdAt"
-    type = "S"
-  }
-
-  global_secondary_index {
-    name = "CategoryIndex"
-    hash_key = "category"
-    range_key = "createdAt"
-    projection_type = "ALL"
-  }
-
-  tags = {
-    Name = "blog-posts-table"
-    Environment = "production"
-    Project = "portfolio"
-  }
 }
 
 # IAM role for Lambda functions
@@ -148,7 +118,7 @@ resource "aws_iam_role_policy" "lambda_policy" {
         Effect   = "Allow"
         Resource = [
           aws_dynamodb_table.blog_posts_table.arn,
-          "${aws_dynamodb_table.blog_posts_table.arn}/index/*"
+          "${data.aws_dynamodb_table.blog_posts_table.arn}/index/*"
         ]
       },
       {
@@ -174,7 +144,7 @@ resource "local_file" "temp_dir" {
 # Create zip archive for the Lambda function
 data "archive_file" "get_all_posts_zip" {
   type = "zip"
-  source_dir = "${path.module}/../../backend/lambdas/getAllPosts"
+  source_dir = "${path.module}/../backend/lambdas/getAllPosts"
   output_path = "${path.module}/files/get_all_posts.zip"
 
   depends_on = [local_file.temp_dir]
@@ -191,7 +161,7 @@ resource "aws_lambda_function" "get_all_posts" {
   
   environment {
     variables = {
-      DYNAMODB_TABLE_NAME = aws_dynamodb_table.blog_posts_table.name
+      DYNAMODB_TABLE_NAME = data.aws_dynamodb_table.blog_posts_table.name
     }
   }
 }
@@ -202,5 +172,5 @@ output "website_url" {
 }
 
 output "blog_posts_table_name" {
-  value = aws_dynamodb_table.blog_posts_table.name
+  value = data.aws_dynamodb_table.blog_posts_table.name
 }
