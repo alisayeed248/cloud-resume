@@ -69,6 +69,7 @@ resource "aws_s3_bucket_policy" "website_policy" {
   })
 }
 
+# DynamoDB table for blog posts
 resource "aws_dynamodb_table" "blog_posts_table" {
   name = "BlogPosts"
   billing_mode = "PAY_PER_REQUEST"
@@ -100,6 +101,92 @@ resource "aws_dynamodb_table" "blog_posts_table" {
     Name = "blog-posts-table"
     Environment = "production"
     Project = "portfolio"
+  }
+}
+
+# IAM role for Lambda functions
+resource "aws_iam_role" "lambda_role" {
+  name = "blog_lambda_role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          Service = "lambda.amazonaws.com"
+        }
+      }
+    ]
+  })
+}
+
+# Policy for Lambda to access DynamoDB and CloudWatch logs
+resource "aws_iam_role_policy" "lambda_policy" {
+  name = "blog_lambda_policy"
+  role = aws_iam_role.lambda_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "dynamodb:GetItem",
+          "dynamodb:PutItem",
+          "dynamodb:UpdateItem",
+          "dynamodb:DeleteItem",
+          "dynamodb:Scan",
+          "dynamodb:Query"
+        ]
+        Effect   = "Allow"
+        Resource = [
+          aws_dynamodb_table.blog_posts.arn,
+          "${aws_dynamodb_table.blog_posts.arn}/index/*"
+        ]
+      },
+      {
+        Action = [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ]
+        Effect   = "Allow"
+        Resource = "arn:aws:logs:*:*:*"
+      }
+    ]
+  })
+}
+
+# Create a directory for temporary files if it doesn't exist
+resource "local_file" "temp_dir" {
+  content     = ""
+  filename    = "${path.module}/files/.keep"
+  directory_permission = "0755"
+}
+
+# Create zip archive for the Lambda function
+data "archive_file" "get_all_posts_zip" {
+  type = "zip"
+  source_dir = "${path.module}/../../backend/lambdas/getAllPosts"
+  output_path = "${path.module}/files/get_all_posts.zip"
+
+  depends_on = [local_file.temp_dir]
+}
+
+# Lambda function that gets all posts
+resource "aws_lambda_function" "get_all_posts" {
+  function_name    = "blog-get-all-posts"
+  role             = aws_iam_role.lambda_role.arn
+  handler          = "lambda_function.lambda_handler"
+  filename         = data.archive_file.get_all_posts_zip.output_path
+  source_code_hash = data.archive_file.get_all_posts_zip.output_base64sha256
+  runtime          = "python3.9"
+  
+  environment {
+    variables = {
+      DYNAMODB_TABLE_NAME = aws_dynamodb_table.blog_posts.name
+    }
   }
 }
 
