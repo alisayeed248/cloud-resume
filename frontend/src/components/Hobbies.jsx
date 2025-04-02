@@ -1,6 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import api from "../services/api";
 
 const Hobbies = () => {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        console.log("Fetching posts...");
+        const data = await api.blog.getAllPosts();
+        console.log("API response:", data);
+        setPosts(data.posts || []);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching posts:", err);
+        setError("Failed to load blog posts");
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
   const categories = [
     {
       id: "tech",
@@ -64,7 +87,33 @@ const Hobbies = () => {
           <h3 className="text-xl sm:text-2xl font-semibold text-blue-400 mb-4 pb-2 border-b border-gray-700">
             Recent Blog Posts
           </h3>
-          <p className="text-gray-300 italic">Loading recent posts...</p>
+
+          {loading ? (
+            <p className="text-gray-300 italic">Loading recent posts...</p>
+          ) : error ? (
+            <p className="text-red-400">{error}</p>
+          ) : posts.length === 0 ? (
+            <p className="text-gray-300">No posts found.</p>
+          ) : (
+            <ul className="space-y-4">
+              {posts.slice(0, 5).map((post) => (
+                <li key={post.id} className="border-b border-gray-700 pb-3">
+                  <a
+                    href={`/blog/post/${post.id}`}
+                    className="block hover:text-blue-400 transition-colors"
+                  >
+                    <h4 className="text-lg font-medium text-white">
+                      {post.title}
+                    </h4>
+                    <p className="text-gray-400 text-sm mt-1">
+                      {post.category} •{" "}
+                      {new Date(post.date).toLocaleDateString()}
+                    </p>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </section>
