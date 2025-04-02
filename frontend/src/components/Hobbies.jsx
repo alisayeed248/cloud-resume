@@ -40,28 +40,31 @@ const Hobbies = () => {
           categories:
         </p>
 
-        {/* Changed to flex box instead of grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+        <div className="flex flex-col md:flex-row flex-wrap gap-6 mb-8">
           {categories.map((category) => (
             <a
               href={`/blog/category/${category.id}`}
-              className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-6 flex flex-col hover:-translate-y-1 transform duration-200"
+              className="md:w-[calc(50%-12px)] w-full bg-gray-800 rounded-xl p-6 sm:p-8 overflow-hidden hover:bg-gray-700 transition-colors duration-300 cursor-pointer"
               key={category.id}
             >
               <div className="text-4xl mb-4">{category.icon}</div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                {category.title}
-              </h3>
-              <p className="text-gray-600">{category.description}</p>
+              <div>
+                <h3 className="text-xl sm:text-2xl font-semibold text-blue-400 mb-2">
+                  {category.title}
+                </h3>
+                <p className="text-gray-300 text-sm sm:text-base mb-4">
+                  {category.description}
+                </p>
+              </div>
             </a>
           ))}
+        </div>
 
-          <div className="bg-gray-50 rounded-lg p-6">
-            <h3 className="text-2xl font-semibold mb-4 pb-2 border-b border-gray-200">
-              Recent Blog Posts
-            </h3>
-            <p className="text-gray-500 italic">Loading recent posts...</p>
-          </div>
+        <div className="w-full bg-gray-800 rounded-xl p-6 sm:p-8 mt-6">
+          <h3 className="text-xl sm:text-2xl font-semibold text-blue-400 mb-4 pb-2 border-b border-gray-700">
+            Recent Blog Posts
+          </h3>
+          <p className="text-gray-300 italic">Loading recent posts...</p>
         </div>
       </div>
     </section>
