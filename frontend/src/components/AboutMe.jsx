@@ -13,7 +13,7 @@ const AboutMe = () => {
           </h2>
           <p className="text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed">
             ... a passionate web developer currently building this resume
-            serverless on AWS. I'm working with a variety of modern technologies
+            serverless on AWS! I'm working with a variety of modern technologies
             including Terraform, S3, DynamoDB, API Gateway, Lambda, GitHub
             Actions, React, and Tailwind to create an efficient application. I
             would love for you to check it out and see how these tools come
