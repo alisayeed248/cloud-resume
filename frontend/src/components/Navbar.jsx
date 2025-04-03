@@ -65,7 +65,13 @@ const Navbar = () => {
       {/* Mobile navigation - hidden on desktop */}
       <div className="fixed top-0 left-0 right-0 bg-gray-800 text-white z-50 md:hidden">
         <div className="flex justify-between items-center p-4">
-          <Link to="/" className="flex items-center space-x-3">
+          <Link
+            to="/"
+            className="flex items-center space-x-3"
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+          >
             <div className="w-10 h-10 rounded-full overflow-hidden">
               <img
                 src={resumeImage}
