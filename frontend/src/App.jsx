@@ -1,24 +1,21 @@
 // src/App.jsx
 import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import AboutMe from "./components/AboutMe";
-import Education from "./components/Education";
-import Experience from "./components/Experience";
-import Projects from "./components/Projects";
-import Hobbies from "./components/Hobbies";
+import HomePage from "./components/HomePage";
 
 function App() {
   return (
-    <div className="min-h-screen w-screen bg-gray-900 flex flex-col md:flex-row overflow-x-hidden">
-      <Navbar />
-      <div className="flex-1 overflow-y-auto md:ml-72">
-        <AboutMe />
-        <Education />
-        <Experience />
-        <Projects />
-        <Hobbies />
+    <BrowserRouter>
+      <div className="min-h-screen w-screen bg-gray-900 flex flex-col md:flex-row overflow-x-hidden">
+        <Navbar />
+        <div className="flex-1 overflow-y-auto md:ml-72">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+          </Routes>
+        </div>
       </div>
-    </div>
+    </BrowserRouter>
   );
 }
 
