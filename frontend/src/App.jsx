@@ -2,7 +2,8 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import HomePage from "./components/HomePage";
+import HomePage from "<div className="" />
+<pages></pages>/HomePage";
 
 function App() {
   return (
