@@ -33,3 +33,5 @@ function HobbyPage() {
     </div>
   );
 }
+
+export default HobbyPage;
