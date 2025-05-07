@@ -7,9 +7,11 @@ function TerminalBootAnimation() {
                 <div className="terminal-window">
                     {/* Terminal header */}
                     <div className="bg-gray-800 p-2 rounded-t-md">
-                        <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                        <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                        <div className="flex space-x-2">
+                            <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                            <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                        </div>
                     </div>
                     {/* Terminal content */}
                     <div className="bg-black p-4 rounded-b-md h-80 font-mono text-green-400">
