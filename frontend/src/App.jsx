@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import Navbar from "./components/Navbar";
 import AboutMe from "./components/AboutMe";
 import Education from "./components/Education";
 import Experience from "./components/Experience";
 import Projects from "./components/Projects";
 import Hobbies from "./components/Hobbies";
-import TerminalBootAnimation from "./components/TerminalBootAnimation"
+import TerminalBootAnimation from "./components/TerminalBootAnimation";
 import HobbyPage from "./pages/HobbyPage";
 import PostPage from "./pages/PostPage";
 
@@ -15,21 +21,23 @@ function RefreshHandler() {
   const location = useLocation();
 
   useEffect(() => {
-    const hasSession = sessionStorage.getItem('appSession');
+    const hasSession = sessionStorage.getItem("appSession");
 
     if (!hasSession) {
-      sessionStorage.setItem('appSession', 'true');
+      sessionStorage.setItem("appSession", "true");
 
-      if (location.pathname !== '/') {
-        sessionStorage.setItem('lastPath', location.pathname);
-        navigate('/', { replace: true });
+      if (location.pathname !== "/") {
+        sessionStorage.setItem("lastPath", location.pathname);
+        navigate("/", { replace: true });
       }
     }
 
     return () => {
-      sessionStorage.removeItem('appSession');
+      // Don't remove session on component unmount
+      // Only when the app actually closes
+      // sessionStorage.removeItem("appSession");
     };
-  }, []);
+  }, [location.pathname, navigate]);
 
   return null;
 }
@@ -44,7 +52,7 @@ function ScrollToSection() {
       "/experience": "experience",
       "/projects": "projects",
       "/hobbies": "hobbies",
-      "/contact": "contact"
+      "/contact": "contact",
     };
 
     const sectionId = pathToId[location.pathname];
@@ -63,12 +71,18 @@ function ScrollToSection() {
 }
 
 function AppContent() {
-  const [showTerminal, setShowTerminal] = useState(true)
+  const [showTerminal, setShowTerminal] = useState(true);
+
+  const handleBootComplete = () => {
+    console.log("Boot animation complete");
+    setShowTerminal(false);
+  };
 
   return (
     <>
       {/* Terminal animation */}
-      {showTerminal && <TerminalBootAnimation />}
+      {showTerminal && <TerminalBootAnimation onComplete={handleBootComplete} />}
+      
       {/* Only show main content when terminal is not showing */}
       {!showTerminal && (
         <div className="min-h-screen w-screen bg-gray-900 flex flex-col md:flex-row overflow-x-hidden">
@@ -77,13 +91,16 @@ function AppContent() {
             <RefreshHandler />
             <ScrollToSection />
 
-            <AboutMe />
-            <Education />
-            <Experience />
-            <Projects />
-            <Hobbies />
-
             <Routes>
+              <Route path="/" element={
+                <>
+                  <AboutMe />
+                  <Education />
+                  <Experience />
+                  <Projects />
+                  <Hobbies />
+                </>
+              } />
               <Route path="/hobbies/:hobbyName" element={<HobbyPage />} />
               <Route path="/hobbies/:hobbyName/:postId" element={<PostPage />} />
             </Routes>
@@ -92,7 +109,10 @@ function AppContent() {
       )}
 
       {/* Test button */}
-      <button className="fixed bottom-4 right-4 bg-blue-500 text-white p-2 rounded-md z-50" onClick={() => setShowTerminal(!showTerminal)}>
+      <button
+        className="fixed bottom-4 right-4 bg-blue-500 text-white p-2 rounded-md z-50"
+        onClick={() => setShowTerminal(!showTerminal)}
+      >
         Toggle Terminal
       </button>
     </>
