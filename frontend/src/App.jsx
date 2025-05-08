@@ -60,7 +60,10 @@ function ScrollToSection() {
     if (sectionId) {
       const section = document.getElementById(sectionId);
       if (section) {
+        console.log(`Scrolling to section: ${sectionId}`);
         section.scrollIntoView({ behavior: "smooth" });
+      } else {
+        console.log(`Section not found: ${sectionId}`);
       }
     } else if (location.pathname === "/") {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -71,7 +74,7 @@ function ScrollToSection() {
 }
 
 function AppContent() {
-  const [showTerminal, setShowTerminal] = useState(true);
+  const [showTerminal, setShowTerminal] = useState(true); // Always show terminal on load
 
   const handleBootComplete = () => {
     console.log("Boot animation complete");
@@ -91,16 +94,15 @@ function AppContent() {
             <RefreshHandler />
             <ScrollToSection />
 
+            {/* Always render all sections on the main page */}
+            <AboutMe />
+            <Education />
+            <Experience />
+            <Projects />
+            <Hobbies />
+            
+            {/* Only use Routes for truly dynamic content */}
             <Routes>
-              <Route path="/" element={
-                <>
-                  <AboutMe />
-                  <Education />
-                  <Experience />
-                  <Projects />
-                  <Hobbies />
-                </>
-              } />
               <Route path="/hobbies/:hobbyName" element={<HobbyPage />} />
               <Route path="/hobbies/:hobbyName/:postId" element={<PostPage />} />
             </Routes>
@@ -108,13 +110,15 @@ function AppContent() {
         </div>
       )}
 
-      {/* Test button */}
-      <button
-        className="fixed bottom-4 right-4 bg-blue-500 text-white p-2 rounded-md z-50"
-        onClick={() => setShowTerminal(!showTerminal)}
-      >
-        Toggle Terminal
-      </button>
+      {/* Test button to show terminal again */}
+      {!showTerminal && (
+        <button
+          className="fixed bottom-4 right-4 bg-blue-500 text-white p-2 rounded-md z-50"
+          onClick={() => setShowTerminal(true)}
+        >
+          Replay Intro
+        </button>
+      )}
     </>
   );
 }

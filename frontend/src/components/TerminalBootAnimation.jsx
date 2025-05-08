@@ -2,69 +2,60 @@ import React, { useState, useEffect } from "react";
 
 function TerminalBootAnimation({ onComplete }) {
   const [displayedLines, setDisplayedLines] = useState([]);
+  const [currentLine, setCurrentLine] = useState("");
+  const [currentLineIndex, setCurrentLineIndex] = useState(0);
+  const [currentCharIndex, setCurrentCharIndex] = useState(0);
   const [showCursor, setShowCursor] = useState(true);
   const [bootComplete, setBootComplete] = useState(false);
 
   const bootSequence = [
-    "$ Starting system initialization...",
-    "$ Loading developer profile: Sayeed Ali",
-    "$ Compiling resume modules...",
-    "$ Optimizing project showcase...",
-    "$ Connecting to LinkedIn node...",
-    "$ Whoops, something went wrong.",
-    "$ ...",
-    "$ Never mind, we roll with it.",
-    "$ Welcome to Sayeed Ali's portfolio.",
-    "$ Press Enter to continue!",
+    "Welcome to Sayeed Ali's Portfolio",
+    "Loading content...",
+    "Preparing developer showcase...",
+    "Optimizing project gallery...",
+    "Connecting to LinkedIn profile...",
+    "Setting up contact information...",
+    "Almost ready...",
+    "Portfolio ready to explore!",
+    "Press Enter to continue or wait a moment...",
   ];
 
-  // Run the animation sequence once on mount
   useEffect(() => {
-    let timeouts = [];
-    let isMounted = true;
-
-    const displayLineWithDelay = (index, delay) => {
-      const timeout = setTimeout(() => {
-        if (isMounted) {
-          console.log(`Displaying line ${index}: ${bootSequence[index]}`);
-          setDisplayedLines(prev => [...prev, bootSequence[index]]);
-          
-          // Schedule next line
-          if (index < bootSequence.length - 1) {
-            displayLineWithDelay(index + 1, 800);
-          } else {
-            // Boot sequence complete
-            console.log("Boot sequence complete");
-            setBootComplete(true);
-            
-            // Auto-complete after delay
-            const finalTimeout = setTimeout(() => {
-              if (isMounted && onComplete) {
-                console.log("Auto-completing");
-                onComplete();
-              }
-            }, 3000);
-            timeouts.push(finalTimeout);
-          }
-        }
-      }, delay);
+    if (currentLineIndex >= bootSequence.length) {
+      console.log("All lines displayed");
+      setBootComplete(true);
       
-      timeouts.push(timeout);
-    };
+      const completeTimeout = setTimeout(() => {
+        if (onComplete) {
+          console.log("Auto-completing");
+          onComplete();
+        }
+      }, 3000);
+      
+      return () => clearTimeout(completeTimeout);
+    }
 
-    // Start the animation sequence with a small initial delay
-    console.log("Starting animation sequence");
-    displayLineWithDelay(0, 300);
+    const currentLineText = bootSequence[currentLineIndex];
+    
+    if (currentCharIndex < currentLineText.length) {
+      const charTimeout = setTimeout(() => {
+        setCurrentLine(prev => prev + currentLineText.charAt(currentCharIndex));
+        setCurrentCharIndex(prev => prev + 1);
+      }, 15); 
+      
+      return () => clearTimeout(charTimeout);
+    } else {
+      const nextLineTimeout = setTimeout(() => {
+        setDisplayedLines(prev => [...prev, currentLine]);
+        setCurrentLine("");
+        setCurrentCharIndex(0);
+        setCurrentLineIndex(prev => prev + 1);
+      }, 300); 
+      
+      return () => clearTimeout(nextLineTimeout);
+    }
+  }, [currentLineIndex, currentCharIndex, currentLine, bootSequence, bootComplete, onComplete]);
 
-    // Cleanup function to clear all timeouts
-    return () => {
-      console.log("Cleaning up all timeouts");
-      isMounted = false;
-      timeouts.forEach(timeout => clearTimeout(timeout));
-    };
-  }, []); // Empty dependency array = run once on mount
-
-  // Blinking cursor effect
   useEffect(() => {
     const cursorInterval = setInterval(() => {
       setShowCursor(prev => !prev);
@@ -73,7 +64,6 @@ function TerminalBootAnimation({ onComplete }) {
     return () => clearInterval(cursorInterval);
   }, []);
 
-  // Key press handler for Enter key
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === "Enter" && bootComplete) {
@@ -92,36 +82,46 @@ function TerminalBootAnimation({ onComplete }) {
 
   return (
     <div className="fixed inset-0 bg-black flex items-center justify-center z-50">
-      <div className="w-full max-w-2xl p-4">
+      <div className="w-full max-w-4xl p-4"> 
         <div className="terminal-window">
-          {/* Terminal header */}
           <div className="bg-gray-800 p-2 rounded-t-md">
-            <div className="flex space-x-2">
-              <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-              <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-              <div className="ml-2 text-xs text-gray-400">terminal@sayeedali.com</div>
+            <div className="flex items-center">
+              <div className="flex space-x-2 mr-4">
+                <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+              </div>
+              <div className="text-sm text-gray-300 font-medium">Portfolio Loader</div>
             </div>
           </div>
-          {/* Terminal content */}
-          <div className="bg-black p-4 rounded-b-md h-80 font-mono text-green-400 overflow-y-auto">
-            {/* Display all lines that have been added so far */}
+          
+          <div className="bg-black p-6 rounded-b-md h-96 font-mono text-green-400">
             {displayedLines.map((line, index) => (
-              <div key={index} className="mb-2">
+              <div key={index} className="mb-3">
                 {line}
               </div>
             ))}
             
-            {/* Blinking cursor at the end */}
-            <span className="inline-block">
-              {showCursor && "█"}
-            </span>
-            
-            {/* Final message when boot sequence is done */}
-            {bootComplete && (
-              <div className="mt-4 text-yellow-300 animate-pulse">
-                Press Enter to continue...
+            {!bootComplete && (
+              <div className="mb-3 flex">
+                <span>{currentLine}</span>
+                <span className="inline-block ml-1">
+                  {showCursor && "█"}
+                </span>
               </div>
+            )}
+            
+            {bootComplete && (
+              <>
+                <div className="mb-3">
+                  <span className="inline-block ml-1">
+                    {showCursor && "█"}
+                  </span>
+                </div>
+                <div className="mt-2 text-blue-300 animate-pulse">
+                  Press Enter to explore the portfolio...
+                </div>
+              </>
             )}
           </div>
         </div>
