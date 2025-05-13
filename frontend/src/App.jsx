@@ -6,6 +6,7 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
+import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from "./components/Navbar";
 import AboutMe from "./components/AboutMe";
 import Education from "./components/Education";
@@ -75,10 +76,15 @@ function ScrollToSection() {
 
 function AppContent() {
   const [showTerminal, setShowTerminal] = useState(true); // Always show terminal on load
+  const [contentVisible, setContentVisible] = useState(false); // 
 
   const handleBootComplete = () => {
     console.log("Boot animation complete");
     setShowTerminal(false);
+
+    setTimeout(() => {
+      setContentVisible(true);
+    }, 3000)
   };
 
   return (
@@ -87,7 +93,7 @@ function AppContent() {
       {showTerminal && <TerminalBootAnimation onComplete={handleBootComplete} />}
       
       {/* Only show main content when terminal is not showing */}
-      {!showTerminal && (
+      {!showTerminal && contentVisible && (
         <div className="min-h-screen w-screen bg-gray-900 flex flex-col md:flex-row overflow-x-hidden">
           <Navbar />
           <div className="flex-1 overflow-y-auto md:ml-72 pt-16 md:pt-0">
