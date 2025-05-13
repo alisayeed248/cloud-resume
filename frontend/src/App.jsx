@@ -6,7 +6,7 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "./components/Navbar";
 import AboutMe from "./components/AboutMe";
 import Education from "./components/Education";
@@ -76,27 +76,61 @@ function ScrollToSection() {
 
 function AppContent() {
   const [showTerminal, setShowTerminal] = useState(true); // Always show terminal on load
-  const [contentVisible, setContentVisible] = useState(false); // 
+  const [contentVisible, setContentVisible] = useState(false); //
+  const [navbarVisible, setNavbarVisible] = useState(false);
+  const [restContentVisible, setRestContentVisisble] = useState(false);
 
   const handleBootComplete = () => {
     console.log("Boot animation complete");
     setShowTerminal(false);
 
     setTimeout(() => {
+      setNavbarVisible(true);
+    }, 500);
+    setTimeout(() => {
+      setMainContentVisible(true);
+    }, 1200);
+    setTimeout(() => {
       setContentVisible(true);
-    }, 3000)
+    }, 1500);
   };
 
   return (
     <>
       {/* Terminal animation */}
-      {showTerminal && <TerminalBootAnimation onComplete={handleBootComplete} />}
-      
+      {showTerminal && (
+        <TerminalBootAnimation onComplete={handleBootComplete} />
+      )}
+
       {/* Only show main content when terminal is not showing */}
       {!showTerminal && contentVisible && (
         <div className="min-h-screen w-screen bg-gray-900 flex flex-col md:flex-row overflow-x-hidden">
-          <Navbar />
+          {/* Animated Navbar */}
+          <AnimatePresence>
+            {navbarVisible && (
+              <motion.div
+                initial={{ x: -300, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 100,
+                  damping: 15,
+                  duration: 0.7,
+                }}
+                className="relative md:w-72"
+              >
+                <Navbar />
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           <div className="flex-1 overflow-y-auto md:ml-72 pt-16 md:pt-0">
+            {/* Animated Main Content*/}
+            <AnimatePresence>
+              {
+
+              }
+            </AnimatePresence>
             <RefreshHandler />
             <ScrollToSection />
 
@@ -106,11 +140,14 @@ function AppContent() {
             <Experience />
             <Projects />
             <Hobbies />
-            
+
             {/* Only use Routes for truly dynamic content */}
             <Routes>
               <Route path="/hobbies/:hobbyName" element={<HobbyPage />} />
-              <Route path="/hobbies/:hobbyName/:postId" element={<PostPage />} />
+              <Route
+                path="/hobbies/:hobbyName/:postId"
+                element={<PostPage />}
+              />
             </Routes>
           </div>
         </div>
