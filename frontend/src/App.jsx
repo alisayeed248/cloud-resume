@@ -125,13 +125,26 @@ function AppContent() {
     }, 500);
     setTimeout(() => {
       setAnimationPhase(2);
-    }, 1000);
+    }, 1100); 
     setTimeout(() => {
       setAnimationPhase(3);
-    }, 1500);
+    }, 1700);
     setTimeout(() => {
       setAnimationPhase(4);
-    }, 2000);
+    }, 2300);
+  };
+
+  const mobileNavVariants = {
+    hidden: { y: -100, opacity: 0 },
+    visible: { 
+      y: 0, 
+      opacity: 1,
+      transition: {
+        type: "tween", 
+        duration: 0.6,
+        ease: "easeOut" 
+      }
+    }
   };
 
   return (
@@ -141,7 +154,7 @@ function AppContent() {
         <TerminalBootAnimation onComplete={handleBootComplete} />
       )}
 
-      {/* Animated tranition */}
+      {/* Animated transition */}
       {!showTerminal && (
         <div className="min-h-screen w-screen bg-gray-900 flex flex-col md:flex-row overflow-x-hidden">
           {/* Animated Navbar */}
@@ -164,23 +177,20 @@ function AppContent() {
             </motion.div>
           </div>
 
-          {/* Mobile navbar - always at the top */}
+          {/* Mobile navbar with optimized animations */}
           <div
             className="md:hidden w-full fixed top-0 left-0 right-0 z-30"
             ref={navbarRef}
+            style={{ willChange: "transform" }}
           >
             <motion.div
               id="mobile-navbar"
-              initial={{ y: -100, opacity: 0 }}
-              animate={{
-                y: animationPhase >= 1 ? 0 : -100,
-                opacity: animationPhase >= 1 ? 1 : 0,
-              }}
-              transition={{
-                type: "spring",
-                stiffness: 70,
-                damping: 20,
-                duration: 0.7,
+              variants={mobileNavVariants}
+              initial="hidden"
+              animate={animationPhase >= 1 ? "visible" : "hidden"}
+              style={{ 
+                willChange: "transform, opacity",
+                backfaceVisibility: "hidden" 
               }}
             >
               <Navbar />
@@ -191,7 +201,8 @@ function AppContent() {
             className="flex-1 overflow-y-auto md:ml-0 md:pt-0"
             style={{
               paddingTop:
-                window.innerWidth < 768 ? `${mobileNavHeight}px` : "0px", marginTop: "0px"
+                window.innerWidth < 768 ? `${mobileNavHeight}px` : "0px",
+              marginTop: "0px" 
             }}
           >
             <RefreshHandler />
@@ -205,13 +216,16 @@ function AppContent() {
                 y: animationPhase >= 2 ? 0 : 50,
               }}
               transition={{
-                type: "spring",
-                stiffness: 70,
-                damping: 18,
-                delay: 0.3,
+                type: "tween", 
+                duration: 0.7,
+                ease: "easeOut",
+                delay: 0.4, 
               }}
               className="md:pt-0"
-              style={{ marginTop: window.innerWidth < 768 ? "1rem" : "0" }}
+              style={{ 
+                marginTop: window.innerWidth < 768 ? "1rem" : "0",
+                willChange: "transform, opacity" 
+              }}
             >
               <AboutMe />
             </motion.div>
@@ -222,7 +236,11 @@ function AppContent() {
               animate={{
                 opacity: animationPhase >= 3 ? 1 : 0,
               }}
-              transition={{ duration: 0.8 }}
+              transition={{ 
+                type: "tween",
+                duration: 0.7,
+                ease: "easeIn"
+              }}
             >
               <Education />
               <Experience />
