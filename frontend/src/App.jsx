@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   BrowserRouter,
   Routes,
@@ -79,16 +79,24 @@ function AppContent() {
   const [showTerminal, setShowTerminal] = useState(true); // Always show terminal on load
   const [animationPhase, setAnimationPhase] = useState(0);
   const [mobileNavHeight, setMobileNavHeight] = useState(0);
+  const navbarRef = useRef(null);
+
+  const defaultMobileNavHeight = 64;
 
   useEffect(() => {
     const img = new Image();
     img.src = resumeImage;
 
     if (window.innerWidth < 768) {
-      const navbarEl = document.getElementById("mobile-navbar");
-      if (navbarEl) {
-        setMobileNavHeight(navbarEl.offsetHeight);
-      }
+      setMobileNavHeight(defaultMobileNavHeight);
+
+      setTimeout(() => {
+        const navbarEl = document.getElementById("mobile-navbar");
+        if (navbarEl) {
+          setMobileNavHeight(navbarEl.offsetHeight);
+          console.log("Measured mobile navbar height:", navbarEl.offsetHeight);
+        }
+      }, 600);
     }
 
     const handleResize = () => {
@@ -96,6 +104,8 @@ function AppContent() {
         const navbarEl = document.getElementById("mobile-navbar");
         if (navbarEl) {
           setMobileNavHeight(navbarEl.offsetHeight);
+        } else {
+          setMobileNavHeight(defaultMobileNavHeight);
         }
       } else {
         setMobileNavHeight(0);
@@ -155,7 +165,10 @@ function AppContent() {
           </div>
 
           {/* Mobile navbar - always at the top */}
-          <div className="md:hidden w-full fixed top-0 left-0 right-0 z-30">
+          <div
+            className="md:hidden w-full fixed top-0 left-0 right-0 z-30"
+            ref={navbarRef}
+          >
             <motion.div
               id="mobile-navbar"
               initial={{ y: -100, opacity: 0 }}
@@ -178,7 +191,7 @@ function AppContent() {
             className="flex-1 overflow-y-auto md:ml-0 md:pt-0"
             style={{
               paddingTop:
-                window.innerWidth < 768 ? `${mobileNavHeight}px` : "0px",
+                window.innerWidth < 768 ? `${mobileNavHeight}px` : "0px", marginTop: "0px"
             }}
           >
             <RefreshHandler />
@@ -195,7 +208,7 @@ function AppContent() {
                 type: "spring",
                 stiffness: 70,
                 damping: 18,
-                delay: 0.2,
+                delay: 0.3,
               }}
               className="md:pt-0"
               style={{ marginTop: window.innerWidth < 768 ? "1rem" : "0" }}
