@@ -76,23 +76,25 @@ function ScrollToSection() {
 
 function AppContent() {
   const [showTerminal, setShowTerminal] = useState(true); // Always show terminal on load
-  const [contentVisible, setContentVisible] = useState(false); //
-  const [navbarVisible, setNavbarVisible] = useState(false);
-  const [restContentVisible, setRestContentVisisble] = useState(false);
+  const [animationPhase, setAnimationPhase] = useState(0);
 
   const handleBootComplete = () => {
     console.log("Boot animation complete");
     setShowTerminal(false);
 
     setTimeout(() => {
-      setNavbarVisible(true);
+      setAnimationPhase(1);
     }, 500);
     setTimeout(() => {
-      setMainContentVisible(true);
-    }, 1200);
+      setAnimationPhase(2);
+    }, 1000);
     setTimeout(() => {
-      setContentVisible(true);
+      etRes;
+      setAnimationPhase(3);
     }, 1500);
+    setTimeout(() => {
+      setAnimationPhase(4);
+    }, 2000);
   };
 
   return (
@@ -102,46 +104,87 @@ function AppContent() {
         <TerminalBootAnimation onComplete={handleBootComplete} />
       )}
 
-      {/* Only show main content when terminal is not showing */}
-      {!showTerminal && contentVisible && (
+      {/* Animated tranition */}
+      {!showTerminal && (
         <div className="min-h-screen w-screen bg-gray-900 flex flex-col md:flex-row overflow-x-hidden">
           {/* Animated Navbar */}
-          <AnimatePresence>
-            {navbarVisible && (
-              <motion.div
-                initial={{ x: -300, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 100,
-                  damping: 15,
-                  duration: 0.7,
-                }}
-                className="relative md:w-72"
-              >
-                <Navbar />
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          <div className="flex-1 overflow-y-auto md:ml-72 pt-16 md:pt-0">
-            {/* Animated Main Content*/}
+          <div className="hidden md:block md:w-72">
             <AnimatePresence>
-              {
-
-              }
+              {animationPhase >= 1 && (
+                <motion.div
+                  initial={{ x: -300, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 15,
+                    duration: 0.7,
+                  }}
+                  className="fixed left-0 top-0 w-72"
+                >
+                  <Navbar />
+                </motion.div>
+              )}
             </AnimatePresence>
+          </div>
+
+          {/* Mobile navbar - always at the top */}
+          <div className="md:hidden w-full">
+            <AnimatePresence>
+              {animationPhase >= 1 && (
+                <motion.div
+                  initial={{ y: -100, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 15,
+                  }}
+                >
+                  <Navbar />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          <div className="flex-1 overflow-y-auto md:ml-0 pt-16 md:pt-0">
             <RefreshHandler />
             <ScrollToSection />
 
-            {/* Always render all sections on the main page */}
-            <AboutMe />
-            <Education />
-            <Experience />
-            <Projects />
-            <Hobbies />
+            {/* About Me with special animation */}
+            <AnimatePresence>
+              {animationPhase >= 2 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 15,
+                  }}
+                >
+                  <AboutMe />
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-            {/* Only use Routes for truly dynamic content */}
+            {/* Rest of content */}
+            <AnimatePresence>
+              {animationPhase >= 3 && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.8 }}
+                >
+                  <Education />
+                  <Experience />
+                  <Projects />
+                  <Hobbies />
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Routes */}
             <Routes>
               <Route path="/hobbies/:hobbyName" element={<HobbyPage />} />
               <Route
