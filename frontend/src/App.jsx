@@ -16,6 +16,7 @@ import Hobbies from "./components/Hobbies";
 import TerminalBootAnimation from "./components/TerminalBootAnimation";
 import HobbyPage from "./pages/HobbyPage";
 import PostPage from "./pages/PostPage";
+import resumeImage from "../src/assets/resume_picture.jpg";
 
 function RefreshHandler() {
   const navigate = useNavigate();
@@ -78,6 +79,11 @@ function AppContent() {
   const [showTerminal, setShowTerminal] = useState(true); // Always show terminal on load
   const [animationPhase, setAnimationPhase] = useState(0);
 
+  useEffect(() => {
+    const img = new Image();
+    img.src = resumeImage;
+  }, []);
+
   const handleBootComplete = () => {
     console.log("Boot animation complete");
     setShowTerminal(false);
@@ -108,43 +114,42 @@ function AppContent() {
       {!showTerminal && (
         <div className="min-h-screen w-screen bg-gray-900 flex flex-col md:flex-row overflow-x-hidden">
           {/* Animated Navbar */}
-          <div className="hidden md:block md:w-72">
-            <AnimatePresence>
-              {animationPhase >= 1 && (
-                <motion.div
-                  initial={{ x: -300, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 100,
-                    damping: 15,
-                    duration: 0.7,
-                  }}
-                  className="fixed left-0 top-0 w-72"
-                >
-                  <Navbar />
-                </motion.div>
-              )}
-            </AnimatePresence>
+          <div className="hidden md:block md:w-72 relative">
+            <motion.div
+              initial={{ x: -300, opacity: 0 }}
+              animate={{
+                x: animationPhase >= 1 ? 0 : -300,
+                opacity: animationPhase >= 1 ? 1 : 0,
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 100,
+                damping: 15,
+                duration: 0.5,
+              }}
+              className="fixed left-0 top-0 bottom-0 w-72"
+            >
+              <Navbar />
+            </motion.div>
           </div>
 
           {/* Mobile navbar - always at the top */}
           <div className="md:hidden w-full">
-            <AnimatePresence>
-              {animationPhase >= 1 && (
-                <motion.div
-                  initial={{ y: -100, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 100,
-                    damping: 15,
-                  }}
-                >
-                  <Navbar />
-                </motion.div>
-              )}
-            </AnimatePresence>
+            <motion.div
+              initial={{ y: -100, opacity: 0 }}
+              animate={{ 
+                y: animationPhase >= 1 ? 0 : -100,
+                opacity: animationPhase >= 1 ? 1 : 0
+              }}
+              transition={{ 
+                type: "spring", 
+                stiffness: 100, 
+                damping: 15,
+                duration: 0.5
+              }}
+            >
+              <Navbar />
+            </motion.div>
           </div>
 
           <div className="flex-1 overflow-y-auto md:ml-0 pt-16 md:pt-0">
@@ -152,37 +157,34 @@ function AppContent() {
             <ScrollToSection />
 
             {/* About Me with special animation */}
-            <AnimatePresence>
-              {animationPhase >= 2 && (
-                <motion.div
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 100,
-                    damping: 15,
-                  }}
-                >
-                  <AboutMe />
-                </motion.div>
-              )}
-            </AnimatePresence>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ 
+                opacity: animationPhase >= 2 ? 1 : 0,
+                y: animationPhase >= 2 ? 0 : 50 
+              }}
+              transition={{ 
+                type: "spring", 
+                stiffness: 100, 
+                damping: 15 
+              }}
+            >
+              <AboutMe />
+            </motion.div>
 
             {/* Rest of content */}
-            <AnimatePresence>
-              {animationPhase >= 3 && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.8 }}
-                >
-                  <Education />
-                  <Experience />
-                  <Projects />
-                  <Hobbies />
-                </motion.div>
-              )}
-            </AnimatePresence>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ 
+                opacity: animationPhase >= 3 ? 1 : 0 
+              }}
+              transition={{ duration: 0.6 }}
+            >
+              <Education />
+              <Experience />
+              <Projects />
+              <Hobbies />
+            </motion.div>
 
             {/* Routes */}
             <Routes>
