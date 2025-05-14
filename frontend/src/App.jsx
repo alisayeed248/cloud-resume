@@ -78,10 +78,32 @@ function ScrollToSection() {
 function AppContent() {
   const [showTerminal, setShowTerminal] = useState(true); // Always show terminal on load
   const [animationPhase, setAnimationPhase] = useState(0);
+  const [mobileNavHeight, setMobileNavHeight] = useState(0);
 
   useEffect(() => {
     const img = new Image();
     img.src = resumeImage;
+
+    if (window.innerWidth < 768) {
+      const navbarEl = document.getElementById("mobile-navbar");
+      if (navbarEl) {
+        setMobileNavHeight(navbarEl.offsetHeight);
+      }
+    }
+
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        const navbarEl = document.getElementById("mobile-navbar");
+        if (navbarEl) {
+          setMobileNavHeight(navbarEl.offsetHeight);
+        }
+      } else {
+        setMobileNavHeight(0);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const handleBootComplete = () => {
@@ -95,7 +117,6 @@ function AppContent() {
       setAnimationPhase(2);
     }, 1000);
     setTimeout(() => {
-      etRes;
       setAnimationPhase(3);
     }, 1500);
     setTimeout(() => {
@@ -123,9 +144,9 @@ function AppContent() {
               }}
               transition={{
                 type: "spring",
-                stiffness: 100,
-                damping: 15,
-                duration: 0.5,
+                stiffness: 80,
+                damping: 18,
+                duration: 0.6,
               }}
               className="fixed left-0 top-0 bottom-0 w-72"
             >
@@ -134,40 +155,50 @@ function AppContent() {
           </div>
 
           {/* Mobile navbar - always at the top */}
-          <div className="md:hidden w-full">
+          <div className="md:hidden w-full fixed top-0 left-0 right-0 z-30">
             <motion.div
+              id="mobile-navbar"
               initial={{ y: -100, opacity: 0 }}
-              animate={{ 
+              animate={{
                 y: animationPhase >= 1 ? 0 : -100,
-                opacity: animationPhase >= 1 ? 1 : 0
+                opacity: animationPhase >= 1 ? 1 : 0,
               }}
-              transition={{ 
-                type: "spring", 
-                stiffness: 100, 
-                damping: 15,
-                duration: 0.5
+              transition={{
+                type: "spring",
+                stiffness: 70,
+                damping: 20,
+                duration: 0.7,
               }}
             >
               <Navbar />
             </motion.div>
           </div>
 
-          <div className="flex-1 overflow-y-auto md:ml-0 pt-16 md:pt-0">
+          <div
+            className="flex-1 overflow-y-auto md:ml-0 md:pt-0"
+            style={{
+              paddingTop:
+                window.innerWidth < 768 ? `${mobileNavHeight}px` : "0px",
+            }}
+          >
             <RefreshHandler />
             <ScrollToSection />
 
             {/* About Me with special animation */}
             <motion.div
               initial={{ opacity: 0, y: 50 }}
-              animate={{ 
+              animate={{
                 opacity: animationPhase >= 2 ? 1 : 0,
-                y: animationPhase >= 2 ? 0 : 50 
+                y: animationPhase >= 2 ? 0 : 50,
               }}
-              transition={{ 
-                type: "spring", 
-                stiffness: 100, 
-                damping: 15 
+              transition={{
+                type: "spring",
+                stiffness: 70,
+                damping: 18,
+                delay: 0.2,
               }}
+              className="md:pt-0"
+              style={{ marginTop: window.innerWidth < 768 ? "1rem" : "0" }}
             >
               <AboutMe />
             </motion.div>
@@ -175,10 +206,10 @@ function AppContent() {
             {/* Rest of content */}
             <motion.div
               initial={{ opacity: 0 }}
-              animate={{ 
-                opacity: animationPhase >= 3 ? 1 : 0 
+              animate={{
+                opacity: animationPhase >= 3 ? 1 : 0,
               }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.8 }}
             >
               <Education />
               <Experience />
