@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import api from "../services/api";
 
 const Hobbies = () => {
@@ -65,8 +66,8 @@ const Hobbies = () => {
 
         <div className="flex flex-col md:flex-row flex-wrap gap-6 mb-8">
           {categories.map((category) => (
-            <a
-              href={`/blog/category/${category.id}`}
+            <Link
+              to={`/hobbies/${category.id}`}
               className="md:w-[calc(50%-12px)] w-full bg-gray-800 rounded-xl p-6 sm:p-8 overflow-hidden hover:bg-gray-700 transition-colors duration-300 cursor-pointer"
               key={category.id}
             >
@@ -79,7 +80,7 @@ const Hobbies = () => {
                   {category.description}
                 </p>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
 

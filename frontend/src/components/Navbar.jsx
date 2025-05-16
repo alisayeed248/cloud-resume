@@ -19,15 +19,20 @@ const Navbar = () => {
 
   const handleNavClick = (item, e) => {
     e.preventDefault();
-    navigate(item.path);
 
-    if (isHomePage) {
+    if (!isHomePage) {
+      navigate("/");
       setTimeout(() => {
         const section = document.getElementById(item.id);
         if (section) {
           section.scrollIntoView({ behavior: "smooth" });
         }
-      }, 0);
+      }, 100);
+    } else {
+      const section = document.getElementById(item.id);
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth" });
+      }
     }
 
     setMobileMenuOpen(false);
@@ -35,9 +40,16 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Desktop navigation - hidden on mobile */}
+      {/* Desktop navigation */}
       <div className="hidden md:fixed md:left-0 md:top-0 md:bottom-0 md:w-72 md:bg-gray-800 md:text-white md:p-4 md:flex md:flex-col md:items-center md:justify-center md:overflow-y-auto">
-        <Link to="/">
+        <Link
+          to="/"
+          onClick={() => {
+            if (isHomePage) {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+          }}
+        >
           <div className="w-40 h-40 rounded-full overflow-hidden mb-8">
             <img
               src={resumeImage}
@@ -62,14 +74,16 @@ const Navbar = () => {
         </ul>
       </div>
 
-      {/* Mobile navigation - hidden on desktop */}
+      {/* Mobile navigation */}
       <div className="fixed top-0 left-0 right-0 bg-gray-800 text-white z-50 md:hidden">
         <div className="flex justify-between items-center p-4">
           <Link
             to="/"
             className="flex items-center space-x-3"
             onClick={() => {
-              window.scrollTo({ top: 0, behavior: "smooth" });
+              if (isHomePage) {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }
             }}
           >
             <div className="w-10 h-10 rounded-full overflow-hidden">
@@ -107,7 +121,7 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Mobile menu dropdown */}
+        {/* Mobile dropdown menu */}
         {mobileMenuOpen && (
           <div className="bg-gray-800 p-4">
             <ul className="font-mono flex flex-col space-y-4 text-lg">
