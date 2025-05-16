@@ -87,6 +87,12 @@ function TerminalBootAnimation({ onComplete }) {
         if (onComplete) {
           onComplete();
         }
+      } else {
+        console.log("Click/tap detected, skipping animation.")
+        setDisplayedLines(bootSequence.slice(0, bootSequence.length));
+        setCurrentLine("");
+        setCurrentLineIndex(bootSequence.length);
+        setBootComplete(true);
       }
     };
 
@@ -135,7 +141,7 @@ function TerminalBootAnimation({ onComplete }) {
                   <span className="inline-block ml-1">{showCursor && "█"}</span>
                 </div>
                 <div className="mt-2 text-blue-300 animate-pulse">
-                  Press Enter to explore the portfolio...
+                  Press Enter or tap to explore the portfolio...
                 </div>
               </>
             )}
