@@ -60,39 +60,36 @@ function HobbyPage() {
 
   return (
     <div className="bg-black min-h-screen text-white">
-      {/* Back button */}
       <div className="container mx-auto px-4 py-4">
-        <Link to="/" className="text-blue-400 hover:text-blue-300 flex items-center">
-          <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <Link to="/" className="text-blue-400 hover:text-blue-300 flex items-center text-sm md:text-base">
+          <svg className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
           Back to Resume
         </Link>
       </div>
 
-      {/* Category header */}
-      <div className="container mx-auto px-4 py-8 text-center">
-        <h1 className="text-5xl font-bold mb-4">{currentCategory.title}</h1>
-        <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+      <div className="container mx-auto px-4 py-4 md:py-8 text-center">
+        <h1 className="text-3xl md:text-5xl font-bold mb-2 md:mb-4">{currentCategory.title}</h1>
+        <p className="text-base md:text-xl text-gray-300 max-w-3xl mx-auto px-2">
           {currentCategory.description}
         </p>
       </div>
 
-      {/* Category navigation */}
-      <div className="bg-gray-900 py-4 mb-8">
-        <div className="container mx-auto px-4">
-          <div className="flex overflow-x-auto space-x-4 pb-2 justify-center">
+      <div className="bg-gray-900 py-3 md:py-4 mb-6 md:mb-8 overflow-x-auto">
+        <div className="container mx-auto px-2 md:px-4">
+          <div className="flex space-x-2 md:space-x-4 pb-1 md:justify-center scrolling-touch no-scrollbar">
             {Object.entries(categoryMap).map(([id, category]) => (
               <Link 
                 key={id}
                 to={`/hobbies/${id}`}
-                className={`whitespace-nowrap px-4 py-2 rounded-full ${
+                className={`whitespace-nowrap px-3 py-1 md:px-4 md:py-2 rounded-full text-sm md:text-base flex-shrink-0 ${
                   id === hobbyName 
                     ? "bg-blue-500 text-white" 
                     : "bg-gray-800 text-gray-300 hover:bg-gray-700"
                 }`}
               >
-                <span className="mr-2">{category.icon}</span>
+                <span className="mr-1 md:mr-2">{category.icon}</span>
                 {category.title}
               </Link>
             ))}
@@ -100,13 +97,11 @@ function HobbyPage() {
         </div>
       </div>
 
-      {/* Latest Articles heading */}
-      <div className="container mx-auto px-4 mb-8">
-        <h2 className="text-4xl font-bold text-center">Latest Articles</h2>
+      <div className="container mx-auto px-4 mb-6 md:mb-8">
+        <h2 className="text-2xl md:text-4xl font-bold text-center">Latest Articles</h2>
       </div>
 
-      {/* Posts grid */}
-      <div className="container mx-auto px-4 pb-16">
+      <div className="container mx-auto px-4 pb-10 md:pb-16">
         {loading ? (
           <div className="text-center py-8">
             <p className="text-gray-400">Loading posts...</p>
@@ -120,36 +115,34 @@ function HobbyPage() {
             <p className="text-gray-400">No posts found in this category.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
             {posts.map((post) => (
               <Link 
                 to={`/hobbies/${hobbyName}/${post.id}`} 
                 key={post.id}
                 className="block"
               >
-                <div className="bg-gray-900 rounded-lg overflow-hidden hover:transform hover:scale-[1.02] transition-transform duration-300">
-                  {/* Post Image */}
+                <div className="bg-gray-900 rounded-lg overflow-hidden hover:transform hover:scale-[1.02] transition-transform duration-300 h-full">
                   <div 
-                    className="h-56 bg-gray-800 bg-cover bg-center"
+                    className="h-40 sm:h-48 md:h-56 bg-gray-800 bg-cover bg-center"
                     style={{ backgroundImage: post.imageUrl ? `url(${post.imageUrl})` : 'none' }}
                   >
                     {!post.imageUrl && (
                       <div className="w-full h-full flex items-center justify-center bg-gray-800">
-                        <span className="text-4xl">{currentCategory.icon}</span>
+                        <span className="text-3xl md:text-4xl">{currentCategory.icon}</span>
                       </div>
                     )}
                   </div>
                   
-                  {/* Post Details */}
-                  <div className="p-5">
-                    <h3 className="text-xl font-bold text-white mb-2">{post.title}</h3>
+                  <div className="p-4 md:p-5">
+                    <h3 className="text-lg md:text-xl font-bold text-white mb-1 md:mb-2">{post.title}</h3>
                     {post.date && (
-                      <p className="text-gray-400 text-sm mb-3">
+                      <p className="text-xs md:text-sm text-gray-400 mb-2 md:mb-3">
                         {new Date(post.date).toLocaleDateString()}
                       </p>
                     )}
                     {post.excerpt && (
-                      <p className="text-gray-300 line-clamp-3">{post.excerpt}</p>
+                      <p className="text-sm md:text-base text-gray-300 line-clamp-2 md:line-clamp-3">{post.excerpt}</p>
                     )}
                   </div>
                 </div>
