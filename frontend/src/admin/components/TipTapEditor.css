@@ -1,10 +1,11 @@
-/* src/admin/components/TipTapEditor.css */
+/* src/admin/components/TipTapEditor.css (fixed text color) */
 .tiptap-editor {
   border: 1px solid #ddd;
   border-radius: 4px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .editor-menu {
@@ -12,54 +13,74 @@
   flex-wrap: wrap;
   padding: 10px;
   border-bottom: 1px solid #ddd;
-  background-color: #f8f8f8;
+  background-color: #f0f0f0;
+  gap: 5px;
 }
 
 .editor-menu button {
-  margin-right: 5px;
-  margin-bottom: 5px;
-  padding: 5px 10px;
-  border: 1px solid #ddd;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
   background-color: white;
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+  font-weight: 500;
+  min-width: 40px;
+  transition: all 0.2s ease;
 }
 
 .editor-menu button:hover {
-  background-color: #f0f0f0;
+  background-color: #e9f5ff;
+  border-color: #4a8df6;
 }
 
 .editor-menu button.is-active {
-  background-color: #e9f5ff;
-  border-color: #4a8df6;
-  color: #4a8df6;
+  background-color: #4a8df6;
+  border-color: #3a7bd5;
+  color: white;
 }
 
 .editor-content {
   padding: 20px;
   min-height: 300px;
   overflow-y: auto;
+  background-color: white;
+  color: #333; /* Ensuring text is dark */
 }
 
+/* Make sure the text inside the editor is visible */
 .ProseMirror {
   outline: none;
   min-height: 300px;
+  color: #333; /* Explicitly set text color */
 }
 
 .ProseMirror p {
   margin: 0 0 1em 0;
   line-height: 1.5;
+  color: #333; /* Explicitly set paragraph text color */
 }
 
 .ProseMirror h1 {
   font-size: 2em;
   margin: 1em 0 0.5em;
+  color: #333; /* Explicitly set heading text color */
 }
 
 .ProseMirror h2 {
   font-size: 1.5em;
   margin: 1em 0 0.5em;
+  color: #333; /* Explicitly set heading text color */
+}
+
+.ProseMirror h3 {
+  font-size: 1.3em;
+  margin: 1em 0 0.5em;
+  color: #333; /* Explicitly set heading text color */
 }
 
 .ProseMirror a {
@@ -71,6 +92,11 @@
 .ProseMirror ol {
   padding-left: 1.5em;
   margin: 1em 0;
+  color: #333; /* Explicitly set list text color */
+}
+
+.ProseMirror li {
+  color: #333; /* Explicitly set list item text color */
 }
 
 .ProseMirror code {
@@ -79,11 +105,12 @@
   border-radius: 3px;
   font-family: monospace;
   font-size: 0.9em;
+  color: #333; /* Explicitly set code text color */
 }
 
 .ProseMirror pre {
   background-color: #0d0d0d;
-  color: #fff;
+  color: #fff; /* This text should remain white as the background is dark */
   padding: 0.75em 1em;
   border-radius: 0.5em;
   font-family: monospace;
@@ -97,3 +124,16 @@
   display: block;
   margin: 1em 0;
 }
+
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #adb5bd;
+  pointer-events: none;
+  height: 0;
+}
+
+/* Ensure the cursor is visible by setting its color */
+.ProseMirror .ProseMirror-gapcursor:after {
+  border-top: 1px solid #333;
+}  

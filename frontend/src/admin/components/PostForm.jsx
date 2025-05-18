@@ -1,5 +1,5 @@
 // src/admin/components/PostForm.jsx
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import TipTapEditor from './TipTapEditor';
 import './PostForm.css';
 
@@ -11,8 +11,10 @@ const PostForm = ({ post, onSave, saving }) => {
   const [category, setCategory] = useState('');
   const [featuredImageUrl, setFeaturedImageUrl] = useState('');
   
-  const hasEditedSlug = useRef(false);
-
+  // Your specific categories
+  const categories = ['Tech', 'Travel', 'Personal', 'Projects'];
+  
+  // Load post data if editing an existing post
   useEffect(() => {
     if (post) {
       setTitle(post.title || '');
@@ -21,37 +23,37 @@ const PostForm = ({ post, onSave, saving }) => {
       setContent(post.content || '');
       setCategory(post.category || '');
       setFeaturedImageUrl(post.featured_image || '');
-      hasEditedSlug.current = true; // prevent auto-regeneration
-    } else {
-      hasEditedSlug.current = false;
     }
   }, [post]);
 
-  const generateSlug = (text) =>
-    text
+  // Generate slug from title
+  const generateSlug = (text) => {
+    return text
       .toLowerCase()
-      .replace(/[^\w\s-]/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/-+/g, '-');
+      .replace(/[^\w\s-]/g, '') // Remove special characters
+      .replace(/\s+/g, '-')      // Replace spaces with hyphens
+      .replace(/-+/g, '-')       // Replace multiple hyphens with single
+      .trim();                    // Trim leading/trailing spaces/hyphens
+  };
 
   const handleTitleChange = (e) => {
     const newTitle = e.target.value;
     setTitle(newTitle);
-
-    if (!hasEditedSlug.current) {
-      const newSlug = generateSlug(newTitle);
-      setSlug(newSlug);
+    
+    // Only auto-generate slug if it hasn't been manually edited
+    if (!post || slug === generateSlug(title)) {
+      setSlug(generateSlug(newTitle));
     }
-  };
-
-  const handleSlugChange = (e) => {
-    hasEditedSlug.current = true;
-    setSlug(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    
+    if (!category) {
+      alert('Please select a category');
+      return;
+    }
+    
     const postData = {
       title,
       slug,
@@ -60,11 +62,11 @@ const PostForm = ({ post, onSave, saving }) => {
       category,
       featured_image: featuredImageUrl,
     };
-
+    
     if (post?.id) {
       postData.id = post.id;
     }
-
+    
     onSave(postData);
   };
 
@@ -79,32 +81,46 @@ const PostForm = ({ post, onSave, saving }) => {
           onChange={handleTitleChange}
           required
           placeholder="Enter post title"
+          className="form-control"
         />
       </div>
-
+      
       <div className="form-group">
         <label htmlFor="slug">Slug</label>
-        <input
-          type="text"
-          id="slug"
-          value={slug}
-          onChange={handleSlugChange}
-          required
-          placeholder="post-url-slug"
-        />
+        <div className="input-group">
+          <input
+            type="text"
+            id="slug"
+            value={slug}
+            onChange={(e) => setSlug(e.target.value)}
+            required
+            placeholder="post-url-slug"
+            className="form-control"
+          />
+          <div className="slug-help">
+            This will be the URL for your post: /hobbies/{category.toLowerCase()}/{slug}
+          </div>
+        </div>
       </div>
-
+      
       <div className="form-group">
         <label htmlFor="category">Category</label>
-        <input
-          type="text"
+        <select
           id="category"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          placeholder="e.g. Technology, Personal, etc."
-        />
+          required
+          className="form-control"
+        >
+          <option value="">Select a category</option>
+          {categories.map((cat) => (
+            <option key={cat} value={cat.toLowerCase()}>
+              {cat}
+            </option>
+          ))}
+        </select>
       </div>
-
+      
       <div className="form-group">
         <label htmlFor="excerpt">Excerpt</label>
         <textarea
@@ -113,9 +129,10 @@ const PostForm = ({ post, onSave, saving }) => {
           onChange={(e) => setExcerpt(e.target.value)}
           placeholder="Brief summary of the post"
           rows="3"
+          className="form-control"
         />
       </div>
-
+      
       <div className="form-group">
         <label htmlFor="featuredImageUrl">Featured Image URL</label>
         <input
@@ -124,6 +141,7 @@ const PostForm = ({ post, onSave, saving }) => {
           value={featuredImageUrl}
           onChange={(e) => setFeaturedImageUrl(e.target.value)}
           placeholder="https://example.com/image.jpg"
+          className="form-control"
         />
         {featuredImageUrl && (
           <div className="image-preview">
@@ -131,15 +149,15 @@ const PostForm = ({ post, onSave, saving }) => {
           </div>
         )}
       </div>
-
+      
       <div className="form-group">
-        <label htmlFor="content">Content</label>
-        <TipTapEditor key={post?.id || 'new'} content={content} onChange={setContent} />
+        <label>Content</label>
+        <TipTapEditor content={content} onChange={setContent} />
       </div>
-
+      
       <div className="form-actions">
         <button type="submit" className="save-button" disabled={saving}>
-          {saving ? 'Saving...' : post?.id ? 'Update Post' : 'Create Post'}
+          {saving ? 'Saving...' : (post?.id ? 'Update Post' : 'Create Post')}
         </button>
       </div>
     </form>
