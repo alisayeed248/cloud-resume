@@ -1,0 +1,99 @@
+/* src/admin/components/TipTapEditor.css */
+.tiptap-editor {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-menu {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  background-color: #f8f8f8;
+}
+
+.editor-menu button {
+  margin-right: 5px;
+  margin-bottom: 5px;
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  background-color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.editor-menu button:hover {
+  background-color: #f0f0f0;
+}
+
+.editor-menu button.is-active {
+  background-color: #e9f5ff;
+  border-color: #4a8df6;
+  color: #4a8df6;
+}
+
+.editor-content {
+  padding: 20px;
+  min-height: 300px;
+  overflow-y: auto;
+}
+
+.ProseMirror {
+  outline: none;
+  min-height: 300px;
+}
+
+.ProseMirror p {
+  margin: 0 0 1em 0;
+  line-height: 1.5;
+}
+
+.ProseMirror h1 {
+  font-size: 2em;
+  margin: 1em 0 0.5em;
+}
+
+.ProseMirror h2 {
+  font-size: 1.5em;
+  margin: 1em 0 0.5em;
+}
+
+.ProseMirror a {
+  color: #4a8df6;
+  text-decoration: underline;
+}
+
+.ProseMirror ul,
+.ProseMirror ol {
+  padding-left: 1.5em;
+  margin: 1em 0;
+}
+
+.ProseMirror code {
+  background-color: #f0f0f0;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-family: monospace;
+  font-size: 0.9em;
+}
+
+.ProseMirror pre {
+  background-color: #0d0d0d;
+  color: #fff;
+  padding: 0.75em 1em;
+  border-radius: 0.5em;
+  font-family: monospace;
+  margin: 1em 0;
+  overflow-x: auto;
+}
+
+.ProseMirror img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1em 0;
+}
