@@ -1,10 +1,10 @@
-// src/admin/components/TipTapEditor.jsx (updated with icons)
 import React, { useEffect } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Image from '@tiptap/extension-image';
 import Link from '@tiptap/extension-link';
 import Placeholder from '@tiptap/extension-placeholder';
+import { Extension } from '@tiptap/core';
 import './TipTapEditor.css';
 
 // Simple icon components
@@ -84,6 +84,19 @@ const ImageIcon = () => (
     <polyline points="21 15 16 10 5 21"></polyline>
   </svg>
 );
+
+const SpaceHandler = Extension.create({
+  name: 'spaceHandler',
+  
+  addKeyboardShortcuts() {
+    return {
+      Space: ({ editor }) => {
+        editor.commands.insertContent(' ');
+        return true;
+      },
+    }
+  },
+});
 
 const MenuBar = ({ editor }) => {
   if (!editor) {
@@ -190,6 +203,7 @@ const TipTapEditor = ({ content, onChange }) => {
       StarterKit,
       Image,
       Link,
+      SpaceHandler,
       Placeholder.configure({
         placeholder: 'Write something amazing...',
       }),
@@ -199,19 +213,37 @@ const TipTapEditor = ({ content, onChange }) => {
       const html = editor.getHTML();
       onChange(html);
     },
-  });
+    editorProps: {
+      handleKeyDown: (view, event) => {
+        return false;
+      },
+      attributes: {
+        class: 'focus:outline-none',
+      },
+    },
+    autofocus: false,
+  },
+  );
 
-  // Update content from props (for editing existing posts)
   useEffect(() => {
     if (editor && content) {
-      editor.commands.setContent(content);
+      if (editor.getHTML() !== content) {
+        editor.commands.setContent(content);
+      }
     }
   }, [content, editor]);
 
   return (
     <div className="tiptap-editor">
       <MenuBar editor={editor} />
-      <EditorContent editor={editor} className="editor-content" />
+      <EditorContent editor={editor} className="editor-content"
+        onKeyDown={(e) => {
+          if (e.key === ' ' && !e.ctrlKey && !e.altKey && !e.metaKey) {
+            e.stopPropagation();
+            return;
+          }
+        }}
+      />
     </div>
   );
 };

@@ -11,7 +11,6 @@ const PostForm = ({ post, onSave, saving }) => {
   const [category, setCategory] = useState('');
   const [featuredImageUrl, setFeaturedImageUrl] = useState('');
   
-  // Your specific categories
   const categories = ['Tech', 'Travel', 'Personal', 'Projects'];
   
   // Load post data if editing an existing post
