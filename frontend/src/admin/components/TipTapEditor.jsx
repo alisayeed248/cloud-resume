@@ -104,9 +104,38 @@ const MenuBar = ({ editor }) => {
   }
 
   const addImage = () => {
-    const url = window.prompt('Enter the image URL');
-    if (url) {
-      editor.chain().focus().setImage({ src: url }).run();
+    const useUrl = window.confirm(
+      "Would you like to insert an image from URL? Click OK for URL, Cancel for file upload."
+    );
+
+    if (useUrl) {
+      // URL option - use existing prompt logic
+      const url = window.prompt('Enter the image URL');
+      if (url) {
+        editor.chain().focus().setImage({ src: url }).run();
+      }
+    } else {
+      // File upload option - create a temporary input element
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      
+      input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          // Read the file as a data URL (base64)
+          const reader = new FileReader();
+          reader.onload = (readerEvent) => {
+            const imageUrl = readerEvent.target.result;
+            // Insert the image with the base64 data URL
+            editor.chain().focus().setImage({ src: imageUrl }).run();
+          };
+          reader.readAsDataURL(file);
+        }
+      };
+      
+      // Trigger file selection dialog
+      input.click();
     }
   };
 
