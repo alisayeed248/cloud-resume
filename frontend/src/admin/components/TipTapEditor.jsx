@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Image from '@tiptap/extension-image';
@@ -87,7 +87,7 @@ const ImageIcon = () => (
 
 const SpaceHandler = Extension.create({
   name: 'spaceHandler',
-  
+
   addKeyboardShortcuts() {
     return {
       Space: ({ editor }) => {
@@ -98,45 +98,44 @@ const SpaceHandler = Extension.create({
   },
 });
 
-const MenuBar = ({ editor }) => {
+const MenuBar = ({ editor, setSuppressOnChange, onChange }) => {
   if (!editor) {
     return null;
   }
 
   const addImage = () => {
-    const useUrl = window.confirm(
-      "Would you like to insert an image from URL? Click OK for URL, Cancel for file upload."
-    );
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
 
-    if (useUrl) {
-      // URL option - use existing prompt logic
-      const url = window.prompt('Enter the image URL');
-      if (url) {
-        editor.chain().focus().setImage({ src: url }).run();
+    input.onchange = (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (readerEvent) => {
+          const imageUrl = readerEvent.target.result;
+          console.log('About to insert image:', imageUrl.substring(0, 50) + '...');
+          // we need this flag to have single source truth for what to render   
+          setSuppressOnChange(true);
+          editor.chain().focus().setImage({ src: imageUrl }).run();
+          // we add a timeout after so that we can add a blank space after the image
+          // if you try to combine the image + empty space after, you might not get an image
+          // setTimeout(() => {
+          //   editor.chain().focus().insertContent('<p></p>').run();
+          // }, 10);
+          setTimeout(() => {
+            setSuppressOnChange(false);
+            // Manually trigger onChange with the current content
+            onChange(editor.getHTML());
+            console.log('Image insertion complete, onChange re-enabled');
+          }, 50);
+        };
+        // re-render can cause editor content to be overwritten, so watch out for the onChange 
+        reader.readAsDataURL(file);
       }
-    } else {
-      // File upload option - create a temporary input element
-      const input = document.createElement('input');
-      input.type = 'file';
-      input.accept = 'image/*';
-      
-      input.onchange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-          // Read the file as a data URL (base64)
-          const reader = new FileReader();
-          reader.onload = (readerEvent) => {
-            const imageUrl = readerEvent.target.result;
-            // Insert the image with the base64 data URL
-            editor.chain().focus().setImage({ src: imageUrl }).run();
-          };
-          reader.readAsDataURL(file);
-        }
-      };
-      
-      // Trigger file selection dialog
-      input.click();
-    }
+    };
+
+    input.click();
   };
 
   const setLink = () => {
@@ -227,6 +226,8 @@ const MenuBar = ({ editor }) => {
 };
 
 const TipTapEditor = ({ content, onChange }) => {
+  const [suppressOnChange, setSuppressOnChange] = useState(false)
+
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -239,8 +240,15 @@ const TipTapEditor = ({ content, onChange }) => {
     ],
     content: content || '',
     onUpdate: ({ editor }) => {
-      const html = editor.getHTML();
-      onChange(html);
+      // we suppress onChange so onUpdate doesn't fire immediately when we insert an image
+      if (!suppressOnChange) {
+        const html = editor.getHTML();
+        console.log('onUpdate fired, content:', html.substring(0, 100) + '...');
+        onChange(html);
+      }
+      else {
+        console.log('onUpdate suppressed during image insertion');
+      }
     },
     editorProps: {
       handleKeyDown: (view, event) => {
@@ -264,7 +272,7 @@ const TipTapEditor = ({ content, onChange }) => {
 
   return (
     <div className="tiptap-editor">
-      <MenuBar editor={editor} />
+      <MenuBar editor={editor} setSuppressOnChange={setSuppressOnChange} onChange={onChange} />
       <EditorContent editor={editor} className="editor-content"
         onKeyDown={(e) => {
           if (e.key === ' ' && !e.ctrlKey && !e.altKey && !e.metaKey) {
