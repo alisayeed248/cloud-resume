@@ -1,6 +1,7 @@
 // src/admin/components/PostForm.jsx
 import React, { useState, useEffect } from 'react';
 import TipTapEditor from './TipTapEditor';
+import { v4 as uuidv4 } from 'uuid';
 import './PostForm.css';
 
 const PostForm = ({ post, onSave, saving }) => {
@@ -53,13 +54,20 @@ const PostForm = ({ post, onSave, saving }) => {
       return;
     }
     
+    const currentTimestamp = new Date().toISOString();
+
     const postData = {
+      postId: uuidv4(),
       title,
       slug,
       excerpt,
       content,
       category,
       featured_image: featuredImageUrl,
+      author: "Sayeed Ali",
+      status: "published",  
+      createdAt: currentTimestamp,
+      updatedAt: currentTimestamp
     };
     
     if (post?.id) {
@@ -159,7 +167,7 @@ const PostForm = ({ post, onSave, saving }) => {
           {saving ? 'Saving...' : (post?.id ? 'Update Post' : 'Create Post')}
         </button>
       </div>
-    </form>
+    </form> 
   );
 };
 
