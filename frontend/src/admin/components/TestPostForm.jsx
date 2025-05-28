@@ -1,6 +1,7 @@
 // src/admin/TestPostForm.jsx
 import React, { useState } from 'react';
 import PostForm from './PostForm';
+import api from '../../services/api';
 
 const TestPostForm = () => {
   const [saving, setSaving] = useState(false);
@@ -10,13 +11,22 @@ const TestPostForm = () => {
     setSaving(true);
     
     // Simulate API call
-    console.log('Saving post:', postData);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    try {
+      console.log('Sending to API:', postData);
+      const result = await api.blog.createPost(postData);
+      console.log('API response:', result);
+      alert('Post created successfully!');
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error creating post');
+    }
+    // console.log('Saving post:', postData);
+    // await new Promise(resolve => setTimeout(resolve, 1000));
     
-    setSavedPost(postData);
+    // setSavedPost(postData);
     setSaving(false);
     
-    alert('Post saved successfully (simulated)');
+    // alert('Post saved successfully (simulated)');
   };
 
   return (
