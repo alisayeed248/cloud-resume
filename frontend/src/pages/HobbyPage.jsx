@@ -7,7 +7,7 @@ function HobbyPage() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
+
   const categoryMap = {
     tech: {
       title: "Technology",
@@ -41,11 +41,26 @@ function HobbyPage() {
     const fetchPosts = async () => {
       try {
         const data = await api.blog.getAllPosts();
+        // DEBUG: Log what we actually got
+        console.log("Raw API response:", data);
+        console.log("Posts array:", data.posts);
+        console.log("Current hobbyName:", hobbyName);
+        // Check each post's category
+        if (data.posts) {
+          data.posts.forEach((post, index) => {
+            console.log(`Post ${index}:`, {
+              title: post.title,
+              category: post.category,
+              id: post.id
+            });
+          });
+        }
         // Filter posts by category (case insensitive)
-        const filteredPosts = data.posts?.filter(post => 
+        const filteredPosts = data.posts?.filter(post =>
           post.category?.toLowerCase() === hobbyName?.toLowerCase()
         ) || [];
-        
+        console.log("Filtered posts:", filteredPosts);
+
         setPosts(filteredPosts);
         setLoading(false);
       } catch (err) {
@@ -80,14 +95,13 @@ function HobbyPage() {
         <div className="container mx-auto px-2 md:px-4">
           <div className="flex space-x-2 md:space-x-4 pb-1 md:justify-center scrolling-touch no-scrollbar">
             {Object.entries(categoryMap).map(([id, category]) => (
-              <Link 
+              <Link
                 key={id}
                 to={`/hobbies/${id}`}
-                className={`whitespace-nowrap px-3 py-1 md:px-4 md:py-2 rounded-full text-sm md:text-base flex-shrink-0 ${
-                  id === hobbyName 
-                    ? "bg-blue-500 text-white" 
-                    : "bg-gray-800 text-gray-300 hover:bg-gray-700"
-                }`}
+                className={`whitespace-nowrap px-3 py-1 md:px-4 md:py-2 rounded-full text-sm md:text-base flex-shrink-0 ${id === hobbyName
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-800 text-gray-300 hover:bg-gray-700"
+                  }`}
               >
                 <span className="mr-1 md:mr-2">{category.icon}</span>
                 {category.title}
@@ -117,13 +131,13 @@ function HobbyPage() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
             {posts.map((post) => (
-              <Link 
-                to={`/hobbies/${hobbyName}/${post.id}`} 
+              <Link
+                to={`/hobbies/${hobbyName}/${post.id}`}
                 key={post.id}
                 className="block"
               >
                 <div className="bg-gray-900 rounded-lg overflow-hidden hover:transform hover:scale-[1.02] transition-transform duration-300 h-full">
-                  <div 
+                  <div
                     className="h-40 sm:h-48 md:h-56 bg-gray-800 bg-cover bg-center"
                     style={{ backgroundImage: post.imageUrl ? `url(${post.imageUrl})` : 'none' }}
                   >
@@ -133,7 +147,7 @@ function HobbyPage() {
                       </div>
                     )}
                   </div>
-                  
+
                   <div className="p-4 md:p-5">
                     <h3 className="text-lg md:text-xl font-bold text-white mb-1 md:mb-2">{post.title}</h3>
                     {post.date && (
