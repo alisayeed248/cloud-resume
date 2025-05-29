@@ -132,8 +132,8 @@ function HobbyPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
             {posts.map((post) => (
               <Link
-                to={`/hobbies/${hobbyName}/${post.id}`}
-                key={post.id}
+                to={`/hobbies/${hobbyName}/${post.slug}`}
+                key={post.slug}
                 className="block"
               >
                 <div className="bg-gray-900 rounded-lg overflow-hidden hover:transform hover:scale-[1.02] transition-transform duration-300 h-full">
