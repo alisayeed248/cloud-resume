@@ -53,6 +53,7 @@ const api = {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'X-Admin-Password': import.meta.env.VITE_ADMIN_PASSWORD
           },
           body: JSON.stringify(postData)
         });
