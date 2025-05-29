@@ -12,7 +12,12 @@ const PostForm = ({ post, onSave, saving }) => {
   const [category, setCategory] = useState('');
   const [featuredImageUrl, setFeaturedImageUrl] = useState('');
   
-  const categories = ['Tech', 'Travel', 'Personal', 'Projects'];
+  const categories = [
+    { value: 'tech', label: 'Tech' },
+    { value: 'travel', label: 'Travel' },
+    { value: 'books', label: 'Books' },
+    { value: 'projects', label: 'Side Projects' }
+  ];
   
   // Load post data if editing an existing post
   useEffect(() => {
@@ -105,7 +110,7 @@ const PostForm = ({ post, onSave, saving }) => {
             className="form-control"
           />
           <div className="slug-help">
-            This will be the URL for your post: /hobbies/{category.toLowerCase()}/{slug}
+            This will be the URL for the post: /hobbies/{category ? category : '{category}'}/{slug}
           </div>
         </div>
       </div>
@@ -121,8 +126,8 @@ const PostForm = ({ post, onSave, saving }) => {
         >
           <option value="">Select a category</option>
           {categories.map((cat) => (
-            <option key={cat} value={cat.toLowerCase()}>
-              {cat}
+            <option key={cat.value} value={cat.value}>
+              {cat.label}
             </option>
           ))}
         </select>
