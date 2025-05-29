@@ -22,9 +22,7 @@ function App() {
           </ProtectedRoute>
         } />
         
-        {/* Remove these unsecured test routes */}
-        {/* <Route path="/test-editor" element={<TestEditor />} />
-        <Route path="/test-post-form" element={<TestPostForm />} /> */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );

@@ -12,23 +12,29 @@ const AdminLogin = ({ onLogin }) => {
     setLoading(true);
     setError('');
 
-    // Get the admin password from environment variables
-    const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD;
-    
-    if (password === ADMIN_PASSWORD) {
-      // Create a simple JWT-like token with expiration
-      const token = {
-        authenticated: true,
-        timestamp: Date.now(),
-        expires: Date.now() + (24 * 60 * 60 * 1000) // 24 hours from now
-      };
-      
-      // Store in localStorage for persistence across browser sessions
-      localStorage.setItem('admin_token', JSON.stringify(token));
-      onLogin(true);
-      navigate('/admin/posts');
-    } else {
-      setError('Invalid password');
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/admin/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ password })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        
+        // Store the actual token from the backend
+        localStorage.setItem('admin_token', data.token);
+        onLogin(true);
+        navigate('/admin/posts');
+      } else {
+        const errorData = await response.json();
+        setError(errorData.error || 'Login failed');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      setError('Network error. Please try again.');
     }
     
     setLoading(false);
