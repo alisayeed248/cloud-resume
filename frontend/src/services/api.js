@@ -31,6 +31,21 @@ const api = {
         return { posts: [] };
       }
     },
+    getPostBySlug: async(slug) => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/posts/${slug}`);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error("Error fetching post:", error);
+        throw error;
+      }
+    },
     createPost: async (postData) => {
       try {
         console.log('Making POST request to:', `${API_BASE_URL}/posts`);

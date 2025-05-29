@@ -1,6 +1,6 @@
 // src/admin/components/PostForm.jsx
 import React, { useState, useEffect } from 'react';
-import TipTapEditor from './TipTapEditor';
+import TipTapEditor from './TiptapEditor';
 import { v4 as uuidv4 } from 'uuid';
 import './PostForm.css';
 
