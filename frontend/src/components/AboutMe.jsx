@@ -45,7 +45,7 @@ const AboutMe = () => {
                 description: "2 years in web development",
               },
             ].map((item, index) => (
-              <div key={index} className="bg-gray-800 p-3 sm:p-4 rounded-lg">
+              <div key={index} className="bg-white/5 backdrop-blur-sm border border-white/10 p-3 sm:p-4 rounded-lg">
                 <h4 className="text-base sm:text-lg font-semibold text-blue-400">
                   {item.title}
                 </h4>

@@ -41,7 +41,7 @@ const Navbar = () => {
   return (
     <>
       {/* Desktop navigation */}
-      <div className="hidden md:fixed md:left-0 md:top-0 md:bottom-0 md:w-72 md:bg-gray-800 md:text-white md:p-4 md:flex md:flex-col md:items-center md:justify-center md:overflow-y-auto">
+      <div className="hidden md:fixed md:left-0 md:top-0 md:bottom-0 md:w-72 md:bg-black md:text-white md:p-4 md:flex md:flex-col md:items-center md:justify-center md:overflow-y-auto">
         <Link
           to="/"
           onClick={() => {
@@ -75,7 +75,7 @@ const Navbar = () => {
       </div>
 
       {/* Mobile navigation */}
-      <div className="fixed top-0 left-0 right-0 bg-gray-800 text-white z-50 md:hidden">
+      <div className="fixed top-0 left-0 right-0 bg-black text-white z-50 md:hidden">
         <div className="flex justify-between items-center p-4">
           <Link
             to="/"
@@ -123,7 +123,7 @@ const Navbar = () => {
 
         {/* Mobile dropdown menu */}
         {mobileMenuOpen && (
-          <div className="bg-gray-800 p-4">
+          <div className="bg-black p-4">
             <ul className="font-mono flex flex-col space-y-4 text-lg">
               {navItems.map((item) => (
                 <li key={item.id}>

@@ -151,7 +151,7 @@ function AppContent() {
 
       {/* Animated transition */}
       {!showTerminal && (
-        <div className="min-h-screen w-screen bg-gray-900 flex flex-col md:flex-row overflow-x-hidden">
+        <div className="min-h-screen w-screen bg-black flex flex-col md:flex-row overflow-x-hidden">
           {/* Animated Navbar */}
           <div className="hidden md:block md:w-72 relative">
             <motion.div
@@ -243,6 +243,7 @@ function AppContent() {
               <Hobbies />
             </motion.div>
           </div>
+          <div className="fixed bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-purple-950/20 to-transparent pointer-events-none z-10"></div>
         </div>
       )}
 
