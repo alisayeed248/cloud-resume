@@ -3,8 +3,9 @@ import { useState, useEffect } from "react";
 const ScrollProgressBar = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
 
-  // after rendering, check for scroll
+  // after rendering, check for scroll throttling?
   useEffect(() => {
+    // add throttling to make it smoother
     const handleScroll = () => {
       const scrollTop = window.scrollY;
       const documentHeight =
@@ -25,15 +26,11 @@ const ScrollProgressBar = () => {
 
   return (
     /* Top left, spans the entire width, 16px (h-4) so easy to see z-50 so on top of everything*/
-    <div className="fixed top-0 left-0 w-full h-8 bg-gray-300 z-50">
+    <div className="fixed top-0 left-0 w-full h-1 bg-gray-800 z-50">
       <div
-        className="h-full bg-red-500"
+        className="h-full bg-gradient-to-r from-blue-900 to-blue-400 transition-all duration-300 ease-out"
         style={{ width: `${scrollProgress}%` }}
-      >
-        <span className="text-white text-xs p-1">
-          {Math.round(scrollProgress)}%
-        </span>
-      </div>
+      ></div>
     </div>
   );
 };
