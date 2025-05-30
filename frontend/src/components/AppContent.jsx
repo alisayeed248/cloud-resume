@@ -8,6 +8,7 @@ import Experience from "./Experience";
 import Projects from "./Projects";
 import Hobbies from "./Hobbies";
 import TerminalBootAnimation from "./TerminalBootAnimation";
+import ScrollProgressBar from "./ScrollProgressBar";
 import resumeImage from "../assets/resume_picture.jpg";
 
 function RefreshHandler() {
@@ -141,6 +142,8 @@ function AppContent() {
 
   return (
     <>
+      {/* Scroll Progress Bar */}
+      <ScrollProgressBar/>
       {/* Terminal animation */}
       {showTerminal && (
         <TerminalBootAnimation onComplete={handleBootComplete} />
