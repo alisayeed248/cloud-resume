@@ -11,32 +11,45 @@ const ProtectedRoute = ({ children }) => {
 
   const checkAuthentication = () => {
     try {
-      // Try to get the token from localStorage
+      // Get the token from localStorage
       const token = localStorage.getItem('admin_token');
       
       if (!token) {
-        // No token found - user needs to login
         setIsAuthenticated(false);
         setIsLoading(false);
         return;
       }
 
-      // Parse the JSON token
-      const parsedToken = JSON.parse(token);
-      
-      // Check if token is expired
-      if (Date.now() > parsedToken.expires) {
-        // Token expired - remove it and require login
+      // Basic token validation (decode and check expiry)
+      try {
+        // Decode the base64 token
+        const decoded = atob(token);
+        const parts = decoded.split(':');
+        
+        if (parts.length < 4) {
+          throw new Error('Invalid token format');
+        }
+        
+        // Check expiry
+        const expiry = parseInt(parts[3]);
+        const now = Math.floor(Date.now() / 1000);
+        
+        if (now > expiry) {
+          // Token expired
+          localStorage.removeItem('admin_token');
+          setIsAuthenticated(false);
+          setIsLoading(false);
+          return;
+        }
+        
+        // Token is valid
+        setIsAuthenticated(true);
+      } catch (error) {
+        // Token is corrupted
         localStorage.removeItem('admin_token');
         setIsAuthenticated(false);
-        setIsLoading(false);
-        return;
       }
-
-      // Token is valid and not expired
-      setIsAuthenticated(parsedToken.authenticated === true);
     } catch (error) {
-      // If there's any error (corrupted token, etc.), clear it
       console.error('Error checking authentication:', error);
       localStorage.removeItem('admin_token');
       setIsAuthenticated(false);
@@ -50,7 +63,6 @@ const ProtectedRoute = ({ children }) => {
   };
 
   const handleLogout = () => {
-    // Clear the token and mark as not authenticated
     localStorage.removeItem('admin_token');
     setIsAuthenticated(false);
   };

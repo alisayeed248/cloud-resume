@@ -53,7 +53,7 @@ const api = {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'X-Admin-Password': import.meta.env.VITE_ADMIN_PASSWORD
+            'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
           },
           body: JSON.stringify(postData)
         });
