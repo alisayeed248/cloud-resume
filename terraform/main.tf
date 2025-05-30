@@ -70,13 +70,12 @@ resource "aws_s3_bucket_policy" "website_policy" {
 }
 
 # DynamoDB table for blog posts
-data "aws_dynamodb_table" "blog_posts_table" {
-  name = "BlogPosts"
+data "aws_dynamodb_table" "blog_posts_dev" {
+  name = "blog-posts-dev"
 }
 
-# IAM role for Lambda functions
-data "aws_iam_role" "lambda_role" {
-  name = "blog_lambda_role"
+data "aws_dynamodb_table" "blog_posts_prod" {
+  name = "blog-posts-prod"
 }
 
 # Create a directory for temporary files if it doesn't exist
@@ -106,5 +105,5 @@ output "website_url" {
 }
 
 output "blog_posts_table_name" {
-  value = data.aws_dynamodb_table.blog_posts_table.name
+  value = data.aws_dynamodb_table.blog_posts_prod.name
 }
