@@ -12,7 +12,7 @@ const TestPostForm = () => {
     
     // Simulate API call
     try {
-      console.log('Sending to API:', postData);
+      console.log('Sending to API: ', postData);
       const result = await api.blog.createPost(postData);
       console.log('API response:', result);
       alert('Post created successfully!');
