@@ -9,7 +9,9 @@ const ScrollProgressBar = () => {
       const scrollTop = window.scrollY;
       const documentHeight =
         document.documentElement.scrollHeight - window.innerHeight;
-      console.log("Scroll position:", scrollTop);
+
+      const progress = (scrollTop / documentHeight) * 100;
+      console.log({scrollTop, documentHeight, progress: Math.round(progress)});
     };
     // whenever scroll event is detected, we run the function and take a look and check our posiion
     window.addEventListener("scroll", handleScroll);
@@ -21,7 +23,7 @@ const ScrollProgressBar = () => {
   return (
     /* Top left, spans the entire width, 16px (h-4) so easy to see z-50 so on top of everything*/
     <div className="fixed top-0 left-0 w-full h-4 bg-red-500 z-50">
-      <p className="text-white text-xs">Testing scroll detection</p>
+      <p className="text-white text-xs">Check console for scroll math</p>
     </div>
   );
 };
