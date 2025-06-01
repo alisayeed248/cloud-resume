@@ -1,4 +1,3 @@
-// src/admin/TestPostForm.jsx
 import React, { useState } from 'react';
 import PostForm from './PostForm';
 import api from '../../services/api';
