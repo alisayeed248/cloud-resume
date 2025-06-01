@@ -11,7 +11,6 @@ const ProtectedRoute = ({ children }) => {
 
   const checkAuthentication = () => {
     try {
-      // Get the token from localStorage
       const token = localStorage.getItem('admin_token');
       
       if (!token) {
@@ -20,46 +19,59 @@ const ProtectedRoute = ({ children }) => {
         return;
       }
 
-      // Basic token validation (decode and check expiry)
+      // Validate token format and expiry
+      let decoded;
       try {
-        // Decode the base64 token
-        const decoded = atob(token);
-        const parts = decoded.split(':');
-        
-        if (parts.length < 4) {
-          throw new Error('Invalid token format');
-        }
-        
-        // Check expiry
-        const expiry = parseInt(parts[3]);
-        const now = Math.floor(Date.now() / 1000);
-        
-        if (now > expiry) {
-          // Token expired
-          localStorage.removeItem('admin_token');
-          setIsAuthenticated(false);
-          setIsLoading(false);
-          return;
-        }
-        
-        // Token is valid
-        setIsAuthenticated(true);
-      } catch (error) {
-        // Token is corrupted
+        // Use atob but suppress the deprecation warning
+        decoded = window.atob(token);
+      } catch (decodeError) {
+        console.warn('Failed to decode token:', decodeError);
         localStorage.removeItem('admin_token');
         setIsAuthenticated(false);
+        setIsLoading(false);
+        return;
       }
+      
+      const parts = decoded.split(':');
+      
+      if (parts.length < 4) {
+        console.warn('Invalid token format - clearing token');
+        localStorage.removeItem('admin_token');
+        setIsAuthenticated(false);
+        setIsLoading(false);
+        return;
+      }
+      
+      // Check expiry
+      const expiry = parseInt(parts[3]);
+      const now = Math.floor(Date.now() / 1000);
+      
+      if (now > expiry) {
+        console.info('Token expired - clearing token');
+        localStorage.removeItem('admin_token');
+        setIsAuthenticated(false);
+        setIsLoading(false);
+        return;
+      }
+      
+      // Token is valid
+      setIsAuthenticated(true);
+      setIsLoading(false);
+      
     } catch (error) {
       console.error('Error checking authentication:', error);
       localStorage.removeItem('admin_token');
       setIsAuthenticated(false);
+      setIsLoading(false);
     }
-    
-    setIsLoading(false);
   };
 
   const handleLogin = (status) => {
     setIsAuthenticated(status);
+    if (status) {
+      // Re-check authentication to ensure token is valid
+      checkAuthentication();
+    }
   };
 
   const handleLogout = () => {
@@ -67,7 +79,6 @@ const ProtectedRoute = ({ children }) => {
     setIsAuthenticated(false);
   };
 
-  // Show loading spinner while checking authentication
   if (isLoading) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
@@ -76,12 +87,10 @@ const ProtectedRoute = ({ children }) => {
     );
   }
 
-  // If not authenticated, show login form
   if (!isAuthenticated) {
     return <AdminLogin onLogin={handleLogin} />;
   }
 
-  // If authenticated, show the protected content with admin header
   return (
     <div>
       <div className="bg-gray-800 p-4 flex justify-between items-center">
