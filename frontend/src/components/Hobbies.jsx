@@ -182,7 +182,7 @@ const Hobbies = () => {
                     viewport={{ once: true }}
                   >
                     <a
-                      href={`/blog/post/${post.id}`}
+                      href={`/blog/post/${post.slug}`}
                       className="block hover:text-blue-400 transition-colors group"
                     >
                       <h4 className="text-lg font-medium text-white group-hover:text-blue-400 transition-colors">
