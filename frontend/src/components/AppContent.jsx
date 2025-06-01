@@ -241,16 +241,6 @@ function AppContent() {
           <div className="fixed bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-purple-950/20 to-transparent pointer-events-none z-10"></div>
         </div>
       )}
-
-      {/* Test button to show terminal again */}
-      {!showTerminal && (
-        <button
-          className="fixed bottom-4 right-4 bg-blue-500 text-white p-2 rounded-md z-50"
-          onClick={() => setShowTerminal(true)}
-        >
-          Replay Intro
-        </button>
-      )}
     </>
   );
 }
