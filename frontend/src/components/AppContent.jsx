@@ -55,11 +55,8 @@ function ScrollToSection() {
     if (sectionId) {
       const section = document.getElementById(sectionId);
       if (section) {
-        console.log(`Scrolling to section: ${sectionId}`);
         section.scrollIntoView({ behavior: "smooth" });
-      } else {
-        console.log(`Section not found: ${sectionId}`);
-      }
+      } 
     } else if (location.pathname === "/") {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -87,7 +84,6 @@ function AppContent() {
         const navbarEl = document.getElementById("mobile-navbar");
         if (navbarEl) {
           setMobileNavHeight(navbarEl.offsetHeight);
-          console.log("Measured mobile navbar height:", navbarEl.offsetHeight);
         }
       }, 600);
     }
@@ -110,7 +106,6 @@ function AppContent() {
   }, []);
 
   const handleBootComplete = () => {
-    console.log("Boot animation complete");
     setShowTerminal(false);
 
     setTimeout(() => {

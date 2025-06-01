@@ -7,7 +7,6 @@ const api = {
         const response = await fetch(`${API_BASE_URL}/posts`);
 
         if (!response.ok) {
-          console.error(`API request failed with status ${response.status}`);
           return { posts: [] };
         }
 
@@ -20,14 +19,12 @@ const api = {
 
             return bodyData
           } catch (parseError) {
-            console.error("Error parsing body:", parseError);
             return { posts: [] };
           }
         }
 
         return data;
       } catch (error) {
-        console.error("API request error:", error);
         return { posts: [] };
       }
     },
@@ -42,13 +39,11 @@ const api = {
         const data = await response.json();
         return data;
       } catch (error) {
-        console.error("Error fetching post:", error);
         throw error;
       }
     },
     createPost: async (postData) => {
       try {
-        console.log('Making POST request to:', `${API_BASE_URL}/posts`);
         const response = await fetch(`${API_BASE_URL}/posts`, {
           method: 'POST',
           headers: {
@@ -59,15 +54,12 @@ const api = {
         });
 
         if (!response.ok) {
-          console.error(`API request failed with status ${response.status}`);
           throw new Error(`HTTP error! status: ${response.status}`);
         }
 
         const result = await response.json();
-        console.log('API response:', result);
         return result;
       } catch (error) {
-        console.error("Error creating post:", error);
         throw error;
       }
     }

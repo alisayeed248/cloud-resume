@@ -114,7 +114,6 @@ const MenuBar = ({ editor, setSuppressOnChange, onChange }) => {
         const reader = new FileReader();
         reader.onload = (readerEvent) => {
           const imageUrl = readerEvent.target.result;
-          console.log('About to insert image:', imageUrl.substring(0, 50) + '...');
           // we need this flag to have single source truth for what to render   
           setSuppressOnChange(true);
           editor.chain().focus().setImage({ src: imageUrl }).run();
@@ -127,7 +126,6 @@ const MenuBar = ({ editor, setSuppressOnChange, onChange }) => {
             setSuppressOnChange(false);
             // Manually trigger onChange with the current content
             onChange(editor.getHTML());
-            console.log('Image insertion complete, onChange re-enabled');
           }, 50);
         };
         // re-render can cause editor content to be overwritten, so watch out for the onChange 
@@ -243,11 +241,7 @@ const TipTapEditor = ({ content, onChange }) => {
       // we suppress onChange so onUpdate doesn't fire immediately when we insert an image
       if (!suppressOnChange) {
         const html = editor.getHTML();
-        console.log('onUpdate fired, content:', html.substring(0, 100) + '...');
         onChange(html);
-      }
-      else {
-        console.log('onUpdate suppressed during image insertion');
       }
     },
     editorProps: {
