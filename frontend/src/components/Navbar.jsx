@@ -14,7 +14,6 @@ const Navbar = () => {
     { path: "/experience", id: "experience", label: "EXPERIENCE" },
     { path: "/projects", id: "projects", label: "PROJECTS" },
     { path: "/hobbies", id: "hobbies", label: "HOBBIES" },
-    { path: "/contact", id: "contact", label: "CONTACT" },
   ];
 
   const handleNavClick = (item, e) => {
