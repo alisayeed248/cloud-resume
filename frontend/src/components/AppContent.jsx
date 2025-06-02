@@ -10,6 +10,7 @@ import Hobbies from "./Hobbies";
 import TerminalBootAnimation from "./TerminalBootAnimation";
 import ScrollProgressBar from "./ScrollProgressBar";
 import resumeImage from "../assets/resume_picture.jpg";
+import VisitorCounter from "./VisitorCounter";
 
 function RefreshHandler() {
   const navigate = useNavigate();
@@ -56,7 +57,7 @@ function ScrollToSection() {
       const section = document.getElementById(sectionId);
       if (section) {
         section.scrollIntoView({ behavior: "smooth" });
-      } 
+      }
     } else if (location.pathname === "/") {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -113,7 +114,7 @@ function AppContent() {
     }, 500);
     setTimeout(() => {
       setAnimationPhase(2);
-    }, 1100); 
+    }, 1100);
     setTimeout(() => {
       setAnimationPhase(3);
     }, 1700);
@@ -124,21 +125,21 @@ function AppContent() {
 
   const mobileNavVariants = {
     hidden: { y: -100, opacity: 0 },
-    visible: { 
-      y: 0, 
+    visible: {
+      y: 0,
       opacity: 1,
       transition: {
-        type: "tween", 
+        type: "tween",
         duration: 0.6,
-        ease: "easeOut" 
-      }
-    }
+        ease: "easeOut",
+      },
+    },
   };
 
   return (
     <>
       {/* Scroll Progress Bar */}
-      <ScrollProgressBar/>
+      <ScrollProgressBar />
       {/* Terminal animation */}
       {showTerminal && (
         <TerminalBootAnimation onComplete={handleBootComplete} />
@@ -178,9 +179,9 @@ function AppContent() {
               variants={mobileNavVariants}
               initial="hidden"
               animate={animationPhase >= 1 ? "visible" : "hidden"}
-              style={{ 
+              style={{
                 willChange: "transform, opacity",
-                backfaceVisibility: "hidden" 
+                backfaceVisibility: "hidden",
               }}
             >
               <Navbar />
@@ -192,7 +193,7 @@ function AppContent() {
             style={{
               paddingTop:
                 window.innerWidth < 768 ? `${mobileNavHeight}px` : "0px",
-              marginTop: "0px" 
+              marginTop: "0px",
             }}
           >
             <RefreshHandler />
@@ -206,15 +207,15 @@ function AppContent() {
                 y: animationPhase >= 2 ? 0 : 50,
               }}
               transition={{
-                type: "tween", 
+                type: "tween",
                 duration: 0.7,
                 ease: "easeOut",
-                delay: 0.4, 
+                delay: 0.4,
               }}
               className="md:pt-0"
-              style={{ 
+              style={{
                 marginTop: window.innerWidth < 768 ? "1rem" : "0",
-                willChange: "transform, opacity" 
+                willChange: "transform, opacity",
               }}
             >
               <AboutMe />
@@ -226,10 +227,10 @@ function AppContent() {
               animate={{
                 opacity: animationPhase >= 3 ? 1 : 0,
               }}
-              transition={{ 
+              transition={{
                 type: "tween",
                 duration: 0.7,
-                ease: "easeIn"
+                ease: "easeIn",
               }}
             >
               <Education />
@@ -237,7 +238,9 @@ function AppContent() {
               <Projects />
               <Hobbies />
             </motion.div>
+            <VisitorCounter />
           </div>
+
           <div className="fixed bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-purple-950/20 to-transparent pointer-events-none z-10"></div>
         </div>
       )}
