@@ -66,7 +66,7 @@ const Education = () => {
             <div className="space-y-4">
               <div>
                 <div className="text-lg font-semibold text-blue-300">
-                  Bachelor of Arts in Computer Science
+                  Bachelor of Arts in <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text font-bold">Computer Science</span>
                 </div>
                 <div className="flex items-center text-gray-400 text-sm mt-1">
                   <svg
@@ -84,8 +84,8 @@ const Education = () => {
                 </div>
               </div>
               <div>
-                <div className="text-lg font-semibold text-green-300">
-                  Bachelor of Arts in Biology
+                <div className="text-lg font-semibold text-blue-300">
+                  Bachelor of Arts in <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text font-bold">Biology</span>
                 </div>
                 <div className="flex items-center text-gray-400 text-sm mt-1">
                   <svg
@@ -115,8 +115,8 @@ const Education = () => {
                 <span className="text-blue-400 mr-3 flex-shrink-0">•</span>
                 <span className="text-sm leading-relaxed">
                   Data Structures, Algorithms, Operating Systems, Database
-                  Systems, Computer Networks, Software Engineering, Machine
-                  Learning, Web Development, Cloud Computing
+                  Systems, Computer Networks, Machine Learning and NLP, Web
+                  Development, Cloud Computing
                 </span>
               </div>
               <div className="flex">
@@ -132,7 +132,7 @@ const Education = () => {
                   </a>
                   <span className="text-gray-400 font-mono ml-2">(2021)</span>
                   <span className="text-gray-400 italic ml-2">
-                    - Excellence in biological sciences research
+                    - Awarded to the biology student with the highest GPA
                   </span>
                 </span>
               </div>
