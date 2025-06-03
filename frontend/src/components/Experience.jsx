@@ -99,7 +99,7 @@ const Experience = () => {
           <div className="mb-4">
             <div className="flex justify-between items-start mb-4">
               <div className="flex-1">
-                <h3 className="text-xl sm:text-2xl font-semibold text-green-400 mb-2">
+                <h3 className="text-xl sm:text-2xl font-semibold text-blue-400 mb-2">
                   Machine Learning Engineer Intern
                 </h3>
                 <div className="space-y-1">
@@ -163,7 +163,7 @@ const Experience = () => {
           <div className="mb-4">
             <div className="flex justify-between items-start mb-4">
               <div className="flex-1">
-                <h3 className="text-xl sm:text-2xl font-semibold text-purple-400 mb-2">
+                <h3 className="text-xl sm:text-2xl font-semibold text-blue-400 mb-2">
                   Software Engineer Intern
                 </h3>
                 <div className="space-y-1">

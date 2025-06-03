@@ -39,21 +39,21 @@ const Hobbies = () => {
       title: "Travel",
       icon: "✈️",
       description: "Places I've visited and travel experiences",
-      color: "green",
+      color: "blue",
     },
     {
       id: "books",
       title: "Books",
       icon: "📚",
       description: "Book reviews and reading lists",
-      color: "purple",
+      color: "blue",
     },
     {
       id: "projects",
       title: "Side Projects",
       icon: "🔨",
       description: "Deep dives into my technical projects",
-      color: "orange",
+      color: "blue",
     },
   ];
 
