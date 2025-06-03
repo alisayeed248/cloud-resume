@@ -49,7 +49,7 @@ const Navbar = () => {
             }
           }}
         >
-          <div className="w-40 h-40 rounded-full overflow-hidden mb-8 border-4 border-blue-400 shadow-xl shadow-blue-400/20 hover:shadow-blue-400/40 transition-all duration-300 hover:scale-105">
+          <div className="w-40 h-40 rounded-full overflow-hidden mb-8 border-4 border-blue-500 shadow-xl shadow-blue-400/20 hover:shadow-blue-400/40 transition-all duration-300 hover:scale-105">
             <img
               src={resumeImage}
               alt="Sayeed Ali"
