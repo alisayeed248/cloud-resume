@@ -58,15 +58,16 @@ const Navbar = () => {
           </div>
         </Link>
 
-        <ul className="font-mono flex flex-col items-center space-y-6 text-lg">
+        <ul className="font-mono flex flex-col items-center space-y-6 text-lg tracking-wide">
           {navItems.map((item) => (
             <li key={item.id}>
               <a
                 href={item.path}
-                className="hover:text-blue-400 transition-colors"
+                className="relative hover:text-blue-400 transition-colors duration-300 group"
                 onClick={(e) => handleNavClick(item, e)}
               >
                 {item.label}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
               </a>
             </li>
           ))}
