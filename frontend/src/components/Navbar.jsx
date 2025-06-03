@@ -58,7 +58,7 @@ const Navbar = () => {
           </div>
         </Link>
 
-        <ul className="font-mono flex flex-col items-center space-y-6 text-lg tracking-wide">
+        <ul className="font-['Work_Sans'] font-normal flex flex-col items-center space-y-6 text-lg tracking-wide">
           {navItems.map((item) => (
             <li key={item.id}>
               <a
