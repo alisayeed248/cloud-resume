@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import resumeArchImage from "../assets/cloud_resume_architecture.png";
 import weatherStreamingArchImage from "../assets/weather_streaming_architecture.png";
 
 const Projects = () => {
+  const [showComingSoon, setShowComingSoon] = useState(false);
+
   const projects = [
     {
       id: 1,
@@ -102,6 +104,7 @@ const Projects = () => {
 
                     <div className="flex flex-wrap gap-3">
                       <button
+                        onClick={() => setShowComingSoon(true)}
                         className={`${colorClasses.button} font-medium hover:underline bg-white/5 border border-white/10 px-4 py-2 rounded-lg hover:bg-white/10 transition-colors duration-200`}
                       >
                         View Details
@@ -123,6 +126,26 @@ const Projects = () => {
             );
           })}
         </div>
+
+        {/* Coming Soon Modal */}
+        {showComingSoon && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div className="bg-gray-900 border border-white/20 rounded-xl p-8 max-w-md mx-4">
+              <h3 className="text-xl font-bold text-white mb-4 text-center">
+                Coming Soon!
+              </h3>
+              <p className="text-gray-300 text-center mb-6">
+                Detailed project breakdown will be available in an upcoming blog post. In the meantime, try Live Demo.
+              </p>
+              <button
+                onClick={() => setShowComingSoon(false)}
+                className="w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors duration-200"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
