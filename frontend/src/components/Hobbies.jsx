@@ -1,12 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import api from "../services/api";
 
 const Hobbies = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -10px 0px' }
+    );
+
+    const cards = document.querySelectorAll('#hobbies .card-float');
+    cards.forEach((card) => observer.observe(card));
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -86,40 +104,22 @@ const Hobbies = () => {
   return (
     <section id="hobbies">
       <div className="w-full p-6 md:p-8 lg:p-10">
-        <motion.h2
-          className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 text-left"
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
-          viewport={{ once: true, margin: "-100px" }}
-        >
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 text-left">
           HOBBIES
-        </motion.h2>
+        </h2>
         
-        <motion.p
-          className="text-lg text-white mb-8"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
-          viewport={{ once: true }}
-        >
+        <p className="text-lg text-white mb-8">
           Outside of work, I enjoy exploring various interests and sharing my
           thoughts through my blog. Check out some of my posts in these
           categories:
-        </motion.p>
+        </p>
 
         {/* Category Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
           {categories.map((category, index) => {
             const colorClasses = getColorClasses(category.color);
             return (
-              <motion.div
-                key={category.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: "easeOut", delay: index * 0.1 }}
-                viewport={{ once: true, margin: "-50px" }}
-              >
+              <div key={category.id} className="card-float">
                 <Link
                   to={`/hobbies/${category.id}`}
                   className="block bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-colors duration-200"
@@ -143,19 +143,13 @@ const Hobbies = () => {
                     </div>
                   </div>
                 </Link>
-              </motion.div>
+              </div>
             );
           })}
         </div>
 
         {/* Recent Blog Posts */}
-        <motion.div
-          className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: "easeOut", delay: 0.4 }}
-          viewport={{ once: true, margin: "-50px" }}
-        >
+        <div className="card-float bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6">
           <h3 className="text-xl sm:text-2xl font-semibold text-blue-400 mb-4 pb-2 border-b border-white/10">
             Recent Blog Posts
           </h3>
@@ -173,13 +167,9 @@ const Hobbies = () => {
             ) : (
               <ul className="space-y-4">
                 {posts.slice(0, 5).map((post, index) => (
-                  <motion.li
+                  <li
                     key={post.id}
                     className="border-b border-white/10 pb-3 last:border-b-0 last:pb-0"
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
-                    viewport={{ once: true }}
                   >
                     <a
                       href={`/hobbies/${post.category}/${post.slug}`}
@@ -193,12 +183,12 @@ const Hobbies = () => {
                         {new Date(post.date).toLocaleDateString()}
                       </p>
                     </a>
-                  </motion.li>
+                  </li>
                 ))}
               </ul>
             )}
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

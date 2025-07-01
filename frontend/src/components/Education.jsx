@@ -1,31 +1,42 @@
 import React from "react";
-import { motion } from "framer-motion";
 import cunyLogo from "../assets/cuny-logo.png";
 import qcLogo from "../assets/qc-logo.png";
 import solutionsArchitectIcon from "../assets/solutions-architect-pro-icon.png";
+import { useEffect } from "react";
 
 const Education = () => {
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '0px 0px -10px 0px',
+      }
+    );
+
+    // Find cards in this component only
+    const cards = document.querySelectorAll('#education .card-float');
+    cards.forEach((card) => observer.observe(card));
+
+    return () => observer.disconnect();
+  }, []); // Run after Education component mounts
   return (
     <section id="education">
       <div className="w-full p-6 md:p-8 lg:p-10">
-        <motion.h2
-          className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 text-left"
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
+        {/* Static header - no animation */}
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 text-left">
           EDUCATION
-        </motion.h2>
+        </h2>
 
-        {/* Queens College Card */}
-        <motion.div
-          className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 sm:p-8 hover:bg-white/10 transition-all duration-300 relative"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true }}
-        >
+        {/* Queens College Card - minimal float animation */}
+        <div className="card-float bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 sm:p-8 hover:bg-white/10 transition-all duration-300 relative">
           {/* Logos - Top Right */}
           <div className="absolute top-4 right-4 sm:top-6 sm:right-6 flex space-x-3">
             <img
@@ -66,7 +77,10 @@ const Education = () => {
             <div className="space-y-4">
               <div>
                 <div className="text-lg font-semibold text-blue-300">
-                  Bachelor of Arts in <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text font-bold">Computer Science</span>
+                  Bachelor of Arts in{" "}
+                  <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text font-bold">
+                    Computer Science
+                  </span>
                 </div>
                 <div className="flex items-center text-gray-400 text-sm mt-1">
                   <svg
@@ -85,7 +99,10 @@ const Education = () => {
               </div>
               <div>
                 <div className="text-lg font-semibold text-blue-300">
-                  Bachelor of Arts in <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text font-bold">Biology</span>
+                  Bachelor of Arts in{" "}
+                  <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text font-bold">
+                    Biology
+                  </span>
                 </div>
                 <div className="flex items-center text-gray-400 text-sm mt-1">
                   <svg
@@ -138,51 +155,27 @@ const Education = () => {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        {/* Certifications Card */}
-        {/* Certifications Card */}
-        <motion.div
-          className="mt-6 sm:mt-8 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 sm:p-8 hover:bg-white/10 transition-all duration-300"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          viewport={{ once: true }}
-        >
+        {/* Certifications Card - minimal float animation */}
+        <div className="card-float mt-6 sm:mt-8 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 sm:p-8 hover:bg-white/10 transition-all duration-300">
           <h4 className="text-xl font-semibold text-white mb-4">
             Professional Certifications
           </h4>
           <div>
-            <motion.div
-              className="inline-block"
-              initial="rest"
-              whileHover="hover"
-              animate="rest"
-            >
-              <motion.div className="text-lg font-semibold text-orange-400 relative flex items-center cursor-default">
+            <div className="inline-block group">
+              <div className="text-lg font-semibold text-orange-400 relative flex items-center cursor-default">
                 <span className="relative">
                   AWS Solutions Architect Professional
-                  <motion.div
-                    className="absolute bottom-0 left-0 h-0.5 bg-orange-400"
-                    variants={{
-                      rest: { width: 0 },
-                      hover: { width: "100%" },
-                    }}
-                    transition={{ duration: 0.4, ease: "easeOut" }}
-                  />
+                  <div className="absolute bottom-0 left-0 h-0.5 bg-orange-400 w-0 group-hover:w-full transition-all duration-300 ease-out" />
                 </span>
-                <motion.img
+                <img
                   src={solutionsArchitectIcon}
                   alt="AWS Solutions Architect Professional"
-                  className="absolute w-24 h-24 left-full ml-2 -top-8" // Positioned absolutely
-                  variants={{
-                    rest: { opacity: 0, scale: 0, x: -10 },
-                    hover: { opacity: 1, scale: 1, x: 0 },
-                  }}
-                  transition={{ duration: 0.3, delay: 0.2 }}
+                  className="absolute w-24 h-24 left-full ml-2 -top-8 opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300"
                 />
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
             <div className="flex items-center text-gray-400 text-sm mt-1">
               <svg
                 className="w-4 h-4 mr-2"
@@ -198,7 +191,7 @@ const Education = () => {
               March 2025
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -1,28 +1,34 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useEffect } from "react";
 
 const Experience = () => {
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -10px 0px' }
+    );
+
+    const cards = document.querySelectorAll('#experience .card-float');
+    cards.forEach((card) => observer.observe(card));
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section id="experience">
       <div className="w-full p-6 md:p-8 lg:p-10">
-        <motion.h2
-          className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 text-left"
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 text-left">
           WORK EXPERIENCE
-        </motion.h2>
+        </h2>
 
         {/* Software Engineer - CISDD */}
-        <motion.div
-          className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 sm:p-8 mb-6 hover:bg-white/10 transition-all duration-300"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          viewport={{ once: true }}
-        >
+        <div className="card-float bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 sm:p-8 mb-6 hover:bg-white/10 transition-all duration-300">
           <div className="mb-4">
             <div className="flex justify-between items-start mb-4">
               <div className="flex-1">
@@ -86,16 +92,10 @@ const Experience = () => {
               </ul>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Machine Learning Engineer Intern - Rad AI */}
-        <motion.div
-          className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 sm:p-8 mb-6 hover:bg-white/10 transition-all duration-300"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true }}
-        >
+        <div className="card-float bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 sm:p-8 mb-6 hover:bg-white/10 transition-all duration-300">
           <div className="mb-4">
             <div className="flex justify-between items-start mb-4">
               <div className="flex-1">
@@ -150,16 +150,10 @@ const Experience = () => {
               </ul>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Software Engineer Intern - Lob */}
-        <motion.div
-          className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 sm:p-8"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          viewport={{ once: true }}
-        >
+        <div className="card-float bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 sm:p-8">
           <div className="mb-4">
             <div className="flex justify-between items-start mb-4">
               <div className="flex-1">
@@ -212,7 +206,7 @@ const Experience = () => {
               </ul>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

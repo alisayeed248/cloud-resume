@@ -11,6 +11,7 @@ import TerminalBootAnimation from "./TerminalBootAnimation";
 import ScrollProgressBar from "./ScrollProgressBar";
 import resumeImage from "../assets/resume_picture.jpg";
 import VisitorCounter from "./VisitorCounter";
+import useCardAnimation from "../hooks/useCardAnimation";
 
 function RefreshHandler() {
   const navigate = useNavigate();
@@ -73,6 +74,8 @@ function AppContent() {
   const navbarRef = useRef(null);
 
   const defaultMobileNavHeight = 64;
+
+  useCardAnimation();
 
   useEffect(() => {
     const img = new Image();

@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from "react";
 import resumeArchImage from "../assets/cloud_resume_architecture.png";
 import weatherStreamingArchImage from "../assets/weather_streaming_architecture.png";
 
@@ -7,6 +6,25 @@ const Projects = () => {
   const [showComingSoon, setShowComingSoon] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
   const [showVideoModal, setShowVideoModal] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -10px 0px' }
+    );
+
+    const cards = document.querySelectorAll('#projects .card-float');
+    cards.forEach((card) => observer.observe(card));
+
+    return () => observer.disconnect();
+  }, []);
 
   const projects = [
     {
@@ -61,32 +79,17 @@ const Projects = () => {
   return (
     <section id="projects">
       <div className="w-full p-6 md:p-8 lg:p-10">
-        <motion.h2
-          className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 text-left"
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
-          viewport={{ once: true, margin: "-100px" }}
-        >
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 text-left">
           PROJECTS
-        </motion.h2>
+        </h2>
 
         <div className="flex flex-col gap-6">
           {projects.map((project, index) => {
             const colorClasses = getColorClasses(project.color);
             return (
-              <motion.div
+              <div
                 key={project.id}
-                className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 sm:p-8 hover:bg-white/10 transition-colors duration-200"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.5,
-                  ease: "easeOut",
-                  delay: index * 0.1,
-                }}
-                viewport={{ once: true, margin: "-50px" }}
-                style={{ willChange: "transform, opacity" }}
+                className="card-float bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 sm:p-8 hover:bg-white/10 transition-colors duration-200"
               >
                 <div className="flex flex-col lg:flex-row gap-6">
                   {/* Image Section */}
@@ -135,7 +138,7 @@ const Projects = () => {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             );
           })}
         </div>
