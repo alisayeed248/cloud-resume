@@ -20,12 +20,10 @@ function TerminalBootAnimation({ onComplete }) {
 
   useEffect(() => {
     if (currentLineIndex >= bootSequence.length) {
-      console.log("All lines displayed");
       setBootComplete(true);
 
       const completeTimeout = setTimeout(() => {
         if (onComplete) {
-          console.log("Auto-completing");
           onComplete();
         }
       }, 3000);
@@ -74,7 +72,6 @@ function TerminalBootAnimation({ onComplete }) {
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === "Enter" && bootComplete) {
-        console.log("Enter pressed, completing");
         if (onComplete) {
           onComplete();
         }
@@ -83,12 +80,10 @@ function TerminalBootAnimation({ onComplete }) {
 
     const handleClick = () => {
       if (bootComplete) {
-        console.log("Click/tap detected, completing");
         if (onComplete) {
           onComplete();
         }
       } else {
-        console.log("Click/tap detected, skipping animation.")
         setDisplayedLines(bootSequence.slice(0, bootSequence.length));
         setCurrentLine("");
         setCurrentLineIndex(bootSequence.length);
