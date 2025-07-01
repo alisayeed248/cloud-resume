@@ -14,8 +14,6 @@ const ScrollProgressBar = () => {
       const progress = (scrollTop / documentHeight) * 100;
       const finalProgress = Math.min(Math.max(progress, 0), 100);
       setScrollProgress(finalProgress);
-
-      console.log("Progress:", Math.round(finalProgress));
     };
     // whenever scroll event is detected, we run the function and take a look and check our posiion
     window.addEventListener("scroll", handleScroll);
