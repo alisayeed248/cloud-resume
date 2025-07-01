@@ -6,18 +6,29 @@ const ScrollProgressBar = () => {
   // after rendering, check for scroll throttling?
   useEffect(() => {
     // add throttling to make it smoother
-    const handleScroll = () => {
+
+    let ticking = false;
+
+    const updateScrollProgress = () => {
       const scrollTop = window.scrollY;
       const documentHeight =
         document.documentElement.scrollHeight - window.innerHeight;
-
       const progress = (scrollTop / documentHeight) * 100;
       const finalProgress = Math.min(Math.max(progress, 0), 100);
+
       setScrollProgress(finalProgress);
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(updateScrollProgress);
+        ticking = true;
+      }
     };
     // whenever scroll event is detected, we run the function and take a look and check our posiion
-    window.addEventListener("scroll", handleScroll);
-    handleScroll(); // we call it to set its initial state
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    updateScrollProgress(); // we call it to set its initial state
     return () => window.removeEventListener("scroll", handleScroll);
     // only once when component first mounts, not everytime it re-renders
   }, []);
