@@ -28,7 +28,7 @@ const Experience = () => {
         </h2>
 
         {/* Software Engineer - CISDD */}
-        <div className="card-float bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 sm:p-8 mb-6 hover:bg-white/10 transition-all duration-300">
+        <div className="card-float bg-black border border-gray-800 rounded-xl p-6 sm:p-8 mb-6 hover:bg-gray-900 transition-all duration-300">
           <div className="mb-4">
             <div className="flex justify-between items-start mb-4">
               <div className="flex-1">
@@ -57,7 +57,7 @@ const Experience = () => {
               </div>
             </div>
             
-            <div className="bg-white/5 border border-white/10 rounded-lg p-4">
+            <div className="bg-gray-900 border border-gray-700 rounded-lg p-4">
               <ul className="text-gray-300 text-sm sm:text-base space-y-3">
                 <li className="flex">
                   <span className="text-blue-400 mr-3 flex-shrink-0">•</span>
@@ -95,7 +95,7 @@ const Experience = () => {
         </div>
 
         {/* Machine Learning Engineer Intern - Rad AI */}
-        <div className="card-float bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 sm:p-8 mb-6 hover:bg-white/10 transition-all duration-300">
+        <div className="card-float bg-black border border-gray-800 rounded-xl p-6 sm:p-8 mb-6 hover:bg-gray-900 transition-all duration-300">
           <div className="mb-4">
             <div className="flex justify-between items-start mb-4">
               <div className="flex-1">
@@ -124,7 +124,7 @@ const Experience = () => {
               </div>
             </div>
             
-            <div className="bg-white/5 border border-white/10 rounded-lg p-4">
+            <div className="bg-gray-900 border border-gray-700 rounded-lg p-4">
               <ul className="text-gray-300 text-sm sm:text-base space-y-3">
                 <li className="flex">
                   <span className="text-green-400 mr-3 flex-shrink-0">•</span>
@@ -153,7 +153,7 @@ const Experience = () => {
         </div>
 
         {/* Software Engineer Intern - Lob */}
-        <div className="card-float bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 sm:p-8">
+        <div className="card-float bg-black border border-gray-800 rounded-xl p-6 sm:p-8 mb-6 hover:bg-gray-900 transition-all duration-300">
           <div className="mb-4">
             <div className="flex justify-between items-start mb-4">
               <div className="flex-1">
@@ -182,7 +182,7 @@ const Experience = () => {
               </div>
             </div>
             
-            <div className="bg-white/5 border border-white/10 rounded-lg p-4">
+            <div className="bg-gray-900 border border-gray-700 rounded-lg p-4">
               <ul className="text-gray-300 text-sm sm:text-base space-y-3">
                 <li className="flex">
                   <span className="text-purple-400 mr-3 flex-shrink-0">•</span>

@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import cunyLogo from "../assets/cuny-logo.png";
 import qcLogo from "../assets/qc-logo.png";
 import solutionsArchitectIcon from "../assets/solutions-architect-pro-icon.png";
-import { useEffect } from "react";
 
 const Education = () => {
   useEffect(() => {
@@ -10,33 +9,29 @@ const Education = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
+            entry.target.classList.add("visible");
             observer.unobserve(entry.target);
           }
         });
       },
-      {
-        threshold: 0.1,
-        rootMargin: '0px 0px -10px 0px',
-      }
+      { threshold: 0.1, rootMargin: "0px 0px -10px 0px" }
     );
 
-    // Find cards in this component only
-    const cards = document.querySelectorAll('#education .card-float');
+    const cards = document.querySelectorAll("#education .card-float");
     cards.forEach((card) => observer.observe(card));
 
     return () => observer.disconnect();
-  }, []); // Run after Education component mounts
+  }, []);
+
   return (
     <section id="education">
       <div className="w-full p-6 md:p-8 lg:p-10">
-        {/* Static header - no animation */}
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 text-left">
           EDUCATION
         </h2>
 
-        {/* Queens College Card - minimal float animation */}
-        <div className="card-float bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 sm:p-8 hover:bg-white/10 transition-all duration-300 relative">
+        {/* Queens College Card */}
+        <div className="card-float bg-black border border-gray-800 rounded-xl p-6 sm:p-8 hover:bg-gray-900 transition-all duration-300 relative">
           {/* Logos - Top Right */}
           <div className="absolute top-4 right-4 sm:top-6 sm:right-6 flex space-x-3">
             <img
@@ -123,7 +118,7 @@ const Education = () => {
           </div>
 
           {/* Coursework & Achievements - Card within card */}
-          <div className="bg-white/5 border border-white/10 rounded-lg p-4">
+          <div className="bg-gray-900 border border-gray-700 rounded-lg p-4">
             <h4 className="text-lg font-medium text-white mb-3">
               Coursework & Achievements
             </h4>
@@ -157,8 +152,8 @@ const Education = () => {
           </div>
         </div>
 
-        {/* Certifications Card - minimal float animation */}
-        <div className="card-float mt-6 sm:mt-8 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 sm:p-8 hover:bg-white/10 transition-all duration-300">
+        {/* Certifications Card */}
+        <div className="card-float mt-6 sm:mt-8 bg-black border border-gray-800 rounded-xl p-6 sm:p-8 hover:bg-gray-900 transition-all duration-300">
           <h4 className="text-xl font-semibold text-white mb-4">
             Professional Certifications
           </h4>
