@@ -113,7 +113,7 @@ const Education = () => {
           </div>
 
           {/* Coursework & Achievements - Card within card */}
-          <div className="bg-gray-900 border border-gray-700 rounded-lg p-4">
+          <div className="bg-gray-950 border border-gray-700 rounded-lg p-4">
             <h4 className="text-lg font-medium text-white mb-3">
               Coursework & Achievements
             </h4>
