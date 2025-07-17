@@ -39,11 +39,6 @@ const Education = () => {
               alt="Queens College Logo"
               className="w-24 h-16 sm:w-24 sm:h-20 opacity-60"
             />
-            <img
-              src={cunyLogo}
-              alt="CUNY Logo"
-              className="w-24 h-16 sm:w-24 sm:h-20 opacity-60"
-            />
           </div>
 
           {/* University Name and Location */}
