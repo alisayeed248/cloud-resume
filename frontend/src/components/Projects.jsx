@@ -75,7 +75,7 @@ const Projects = () => {
             return (
               <div
                 key={project.id}
-                className="card-float bg-black border border-gray-800 rounded-xl p-6 sm:p-8 hover:bg-gray-900 transition-colors duration-200"
+                className="card-float bg-black border border-gray-800 rounded-xl p-6 sm:p-8 hover:transform hover:-translate-y-1 hover:shadow-lg transition-colors duration-200"
               >
                 <div className="flex flex-col lg:flex-row gap-6">
                   <div className="lg:w-1/2">
