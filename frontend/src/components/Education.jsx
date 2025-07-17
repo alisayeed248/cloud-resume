@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import cunyLogo from "../assets/cuny-logo.png";
 import qcLogo from "../assets/qc-logo.png";
 import solutionsArchitectIcon from "../assets/solutions-architect-pro-icon.png";
 

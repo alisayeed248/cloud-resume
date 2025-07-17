@@ -79,7 +79,7 @@ const Projects = () => {
               >
                 <div className="flex flex-col lg:flex-row gap-6">
                   <div className="lg:w-1/2">
-                    <div className="bg-gray-800 border border-gray-600 rounded-lg p-4 h-full">
+                    <div className="bg-slate-950 border border-gray-600 rounded-lg p-4 h-full">
                       <img
                         src={project.image}
                         alt={project.title}
@@ -91,7 +91,7 @@ const Projects = () => {
                     <h3 className={`text-xl sm:text-2xl font-semibold ${colorClasses.title} mb-4`}>
                       {project.title}
                     </h3>
-                    <div className="bg-gray-900 border border-gray-700 rounded-lg p-4 mb-4">
+                    <div className="bg-zinc-950 border border-slate-700 rounded-lg p-4 mb-4">
                       <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
                         {project.description}
                       </p>
@@ -99,18 +99,18 @@ const Projects = () => {
                     <div className="flex flex-wrap gap-3">
                       <button
                         onClick={() => setShowComingSoon(true)}
-                        className={`${colorClasses.button} font-medium hover:underline bg-gray-900 border border-gray-700 px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors duration-200`}
+                        className={`${colorClasses.button} font-medium hover:underline bg-slate-950 border border-gray-700 px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors duration-200`}
                       >
                         View Details
                       </button>
                       <button
                         onClick={() => handleLiveDemo(project)}
-                        className={`${colorClasses.button} font-medium hover:underline bg-gray-900 border border-gray-700 px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors duration-200`}
+                        className={`${colorClasses.button} font-medium hover:underline bg-slate-950 border border-gray-700 px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors duration-200`}
                       >
                         Live Demo
                       </button>
                       <button
-                        className={`${colorClasses.button} font-medium hover:underline bg-gray-900 border border-gray-700 px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors duration-200`}
+                        className={`${colorClasses.button} font-medium hover:underline bg-slate-950 border border-gray-700 px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors duration-200`}
                       >
                         Source Code
                       </button>
