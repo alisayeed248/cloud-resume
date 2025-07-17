@@ -128,21 +128,21 @@ const Experience = () => {
             <div className="bg-gray-950 border border-gray-700 rounded-lg p-4">
               <ul className="text-gray-300 text-sm sm:text-base space-y-3">
                 <li className="flex">
-                  <span className="text-green-400 mr-3 flex-shrink-0">•</span>
+                  <span className="text-blue-400 mr-3 flex-shrink-0">•</span>
                   <span className="leading-relaxed">
                     Analyzed thousands of radiology reports for Rad AI using Python to discover patterns
                     among patient reports and to categorize them into their most likely diagnostic criteria.
                   </span>
                 </li>
                 <li className="flex">
-                  <span className="text-green-400 mr-3 flex-shrink-0">•</span>
+                  <span className="text-blue-400 mr-3 flex-shrink-0">•</span>
                   <span className="leading-relaxed">
                     Applied machine learning algorithms to minimize high-dimensional data into
                     easy-to-read graphs.
                   </span>
                 </li>
                 <li className="flex">
-                  <span className="text-green-400 mr-3 flex-shrink-0">•</span>
+                  <span className="text-blue-400 mr-3 flex-shrink-0">•</span>
                   <span className="leading-relaxed">
                     Utilized TF-IDF methodologies to transform radiology text into
                     machine-learning-friendly formats.
@@ -186,20 +186,20 @@ const Experience = () => {
             <div className="bg-gray-950 border border-gray-700 rounded-lg p-4">
               <ul className="text-gray-300 text-sm sm:text-base space-y-3">
                 <li className="flex">
-                  <span className="text-purple-400 mr-3 flex-shrink-0">•</span>
+                  <span className="text-blue-400 mr-3 flex-shrink-0">•</span>
                   <span className="leading-relaxed">
                     Used Node.js and React to build a microservice to automate mail dispatch processes for Lob.
                   </span>
                 </li>
                 <li className="flex">
-                  <span className="text-purple-400 mr-3 flex-shrink-0">•</span>
+                  <span className="text-blue-400 mr-3 flex-shrink-0">•</span>
                   <span className="leading-relaxed">
                     Implemented fault-tolerant backend endpoints with REST APIs to interact with
                     PostgreSQL queries.
                   </span>
                 </li>
                 <li className="flex">
-                  <span className="text-purple-400 mr-3 flex-shrink-0">•</span>
+                  <span className="text-blue-400 mr-3 flex-shrink-0">•</span>
                   <span className="leading-relaxed">
                     Successfully deployed the final product as a widget using Heroku for use by Lob's API users.
                   </span>
