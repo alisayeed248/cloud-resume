@@ -31,7 +31,7 @@ const Education = () => {
         </h2>
 
         {/* Queens College Card */}
-        <div className="card-float bg-black border border-gray-800 rounded-xl p-6 sm:p-8 hover:bg-gray-900 transition-all duration-300 relative">
+        <div className="card-float bg-black border border-gray-800 rounded-xl p-6 sm:p-8 hover:transform hover:-translate-y-1 hover:shadow-lg transition-all duration-300 relative">
           {/* Logos - Top Right */}
           <div className="absolute top-4 right-4 sm:top-6 sm:right-6 flex space-x-3">
             <img
@@ -148,7 +148,7 @@ const Education = () => {
         </div>
 
         {/* Certifications Card */}
-        <div className="card-float mt-6 sm:mt-8 bg-black border border-gray-800 rounded-xl p-6 sm:p-8 hover:bg-gray-900 transition-all duration-300">
+        <div className="card-float mt-6 sm:mt-8 bg-black border border-gray-800 rounded-xl p-6 sm:p-8 hover:transform hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
           <h4 className="text-xl font-semibold text-white mb-4">
             Professional Certifications
           </h4>
