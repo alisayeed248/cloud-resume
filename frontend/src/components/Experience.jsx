@@ -57,7 +57,7 @@ const Experience = () => {
               </div>
             </div>
             
-            <div className="bg-black border border-gray-700 rounded-lg p-4">
+            <div className="bg-gray-950 border border-gray-700 rounded-lg p-4">
               <ul className="text-gray-300 text-sm sm:text-base space-y-3">
                 <li className="flex">
                   <span className="text-blue-400 mr-3 flex-shrink-0">•</span>
@@ -125,7 +125,7 @@ const Experience = () => {
               </div>
             </div>
             
-            <div className="bg-black border border-gray-700 rounded-lg p-4">
+            <div className="bg-gray-950 border border-gray-700 rounded-lg p-4">
               <ul className="text-gray-300 text-sm sm:text-base space-y-3">
                 <li className="flex">
                   <span className="text-green-400 mr-3 flex-shrink-0">•</span>
@@ -183,7 +183,7 @@ const Experience = () => {
               </div>
             </div>
             
-            <div className="bg-black border border-gray-700 rounded-lg p-4">
+            <div className="bg-gray-950 border border-gray-700 rounded-lg p-4">
               <ul className="text-gray-300 text-sm sm:text-base space-y-3">
                 <li className="flex">
                   <span className="text-purple-400 mr-3 flex-shrink-0">•</span>
