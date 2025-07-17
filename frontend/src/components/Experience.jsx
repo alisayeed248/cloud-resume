@@ -31,7 +31,7 @@ const Experience = () => {
                 </h3>
                 <div className="space-y-1">
                   <p className="text-gray-300 text-sm sm:text-base">
-                    CUNY Institute for Software Design & Development
+                    Research Foundation CUNY
                   </p>
                   <div className="flex items-center text-gray-400 text-sm">
                     <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -56,24 +56,19 @@ const Experience = () => {
                 <li className="flex">
                   <span className="text-blue-400 mr-3 flex-shrink-0">•</span>
                   <span className="leading-relaxed">
-                    Developed searchable case management and financial reporting services for the NYC
-                    Marriage Bureau using Python and Django to store, sort, and retrieve marriage cases and cash reports.
+                    Built an automated service to deliver monthly reports directly to CUNY executives, analyzing annual energy expenditures of upwards of $25+ million.
                   </span>
                 </li>
                 <li className="flex">
                   <span className="text-blue-400 mr-3 flex-shrink-0">•</span>
                   <span className="leading-relaxed">
-                    Aggregated sensor data and analyzed energy usage patterns across CUNY to identify
-                    inefficiencies and optimize costs, examining multi-million dollar expenditures. Developed an automated email service using
-                    Java and Spring Boot to generate quarterly energy reports to CUNY leadership.
+                    Analyzed the NYC Marriage Bureau's legacy document processing system and architected an AWS migration strategy to convert thousands of physical records into PDFs for cloud storage. Provided technical specifications and recommendations to the NYC Office of Technology and Innovation development team, including networking architecture, cloud migration pathways, and AWS-based solutions to address system challenges and workflow bottlenecks.
                   </span>
                 </li>
                 <li className="flex">
                   <span className="text-blue-400 mr-3 flex-shrink-0">•</span>
                   <span className="leading-relaxed">
-                    Designed and implemented a full-scale ETL solution using Talend to digitize
-                    and streamline NYC Marriage Bureau's document processing workflow, converting thousands of physical marriage records into
-                    PDFs. Extracted, transformed, and loaded structured metadata into SQL Server.
+                    Resolved multiple critical bugs for case management systems and other internal tooling for employees at the NYC Marriage Bureau using Python, Flask, and PHP.
                   </span>
                 </li>
                 <li className="flex">
@@ -81,6 +76,12 @@ const Experience = () => {
                   <span className="leading-relaxed">
                     Configured networking, DHCP, and domain controller services for all marriage bureau
                     machines, applications, and servers. Automated virtual machine tasks with shell scripting in Linux.
+                  </span>
+                </li>
+                <li className="flex">
+                  <span className="text-blue-400 mr-3 flex-shrink-0">•</span>
+                  <span className="leading-relaxed">
+                    Mentored and onboarded SWE intern cohorts. Led training sessions, created onboarding documentation, assisted in accessing dev and production environments, and provided first issues.
                   </span>
                 </li>
               </ul>
