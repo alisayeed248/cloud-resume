@@ -141,7 +141,7 @@ const Experience = () => {
           <div className="mb-4">
             <div className="flex justify-between items-start mb-4">
               <div className="flex-1">
-                <div className="w-28 h-20 mb-3 overflow-hidden rounded">
+                <div className="w-36 h-24 mb-3 overflow-hidden rounded">
                   <img
                     src={radAiLogo}
                     alt="Rad AI"
