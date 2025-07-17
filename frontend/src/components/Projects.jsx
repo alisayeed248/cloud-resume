@@ -13,15 +13,15 @@ const Projects = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
+            entry.target.classList.add("visible");
             observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.1, rootMargin: '0px 0px -10px 0px' }
+      { threshold: 0.1, rootMargin: "0px 0px -10px 0px" }
     );
 
-    const cards = document.querySelectorAll('#projects .card-float');
+    const cards = document.querySelectorAll("#projects .card-float");
     cards.forEach((card) => observer.observe(card));
 
     return () => observer.disconnect();
@@ -31,20 +31,25 @@ const Projects = () => {
     {
       id: 1,
       title: "Serverless Cloud Resume",
-      description: "A portfolio website built with React, Tailwind, and AWS. This project shows the end-to-end development of a serverless Resume website, using S3 to host the bucket, API Gateway and Lambda to handle the blog, Terraform and GitHub Actions for CI/CD, and more. Check it out!",
+      description:
+        "A portfolio website built with React, Tailwind, and AWS. This project shows the end-to-end development of a serverless Resume website, using S3 to host the bucket, API Gateway and Lambda to handle the blog, Terraform and GitHub Actions for CI/CD, and more. Check it out!",
       image: resumeArchImage,
       color: "blue",
       demoType: "current",
-      demoMessage: "You're experiencing it right now! This entire website is the live demo.",
+      demoMessage:
+        "You're experiencing it right now! This entire website is the live demo.",
+      githubUrl: "https://github.com/alisayeed248/cloud-resume",
     },
     {
       id: 2,
       title: "WeatherStream Pipeline",
-      description: "A production-ready weather data processing pipeline built with Spring Boot, Kafka, and PostgreSQL. Features dynamic city scheduling, real-time data streaming, and a CLI interface for easy management. Continuously ingests weather data from OpenWeatherMap API, processes it through Kafka topics, and stores historical data for querying.",
+      description:
+        "A production-ready weather data processing pipeline built with Spring Boot, Kafka, and PostgreSQL. Features dynamic city scheduling, real-time data streaming, and a CLI interface for easy management. Continuously ingests weather data from OpenWeatherMap API, processes it through Kafka topics, and stores historical data for querying.",
       image: weatherStreamingArchImage,
       color: "green",
       demoType: "video",
       demoMessage: "Watch the WeatherStream Pipeline in action:",
+      githubUrl: "https://github.com/alisayeed248/weatherstream-pipeline",
     },
   ];
 
@@ -88,7 +93,9 @@ const Projects = () => {
                     </div>
                   </div>
                   <div className="lg:w-1/2 flex flex-col justify-center">
-                    <h3 className={`text-xl sm:text-2xl font-semibold ${colorClasses.title} mb-4`}>
+                    <h3
+                      className={`text-xl sm:text-2xl font-semibold ${colorClasses.title} mb-4`}
+                    >
                       {project.title}
                     </h3>
                     <div className="bg-zinc-950 border border-slate-700 rounded-lg p-4 mb-4">
@@ -110,6 +117,7 @@ const Projects = () => {
                         Live Demo
                       </button>
                       <button
+                        onClick={() => window.open(project.githubUrl, "_blank")}
                         className={`${colorClasses.button} font-medium hover:underline bg-slate-950 border border-gray-700 px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors duration-200`}
                       >
                         Source Code
@@ -126,9 +134,12 @@ const Projects = () => {
         {showComingSoon && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
             <div className="bg-gray-900 border border-gray-700 rounded-xl p-8 max-w-md mx-4">
-              <h3 className="text-xl font-bold text-white mb-4 text-center">Coming Soon!</h3>
+              <h3 className="text-xl font-bold text-white mb-4 text-center">
+                Coming Soon!
+              </h3>
               <p className="text-gray-300 text-center mb-6">
-                Detailed project breakdown will be available in an upcoming blog post. In the meantime, try Live Demo.
+                Detailed project breakdown will be available in an upcoming blog
+                post. In the meantime, try Live Demo.
               </p>
               <button
                 onClick={() => setShowComingSoon(false)}
@@ -151,22 +162,39 @@ const Projects = () => {
                   onClick={() => setShowVideoModal(false)}
                   className="text-gray-400 hover:text-white transition-colors"
                 >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
                   </svg>
                 </button>
               </div>
               <div className="text-center">
-                <p className="text-gray-300 mb-4">{selectedProject.demoMessage}</p>
+                <p className="text-gray-300 mb-4">
+                  {selectedProject.demoMessage}
+                </p>
                 {selectedProject.demoType === "current" ? (
                   <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-6">
                     <div className="text-4xl mb-4">🎉</div>
-                    <p className="text-blue-300 text-lg">You're already experiencing the live demo!</p>
+                    <p className="text-blue-300 text-lg">
+                      You're already experiencing the live demo!
+                    </p>
                   </div>
                 ) : (
                   <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-6">
                     <div className="text-4xl mb-4">🎬</div>
-                    <p className="text-yellow-300">Demo video coming soon! Currently preparing the demonstration.</p>
+                    <p className="text-yellow-300">
+                      Demo video coming soon! Currently preparing the
+                      demonstration.
+                    </p>
                   </div>
                 )}
               </div>
