@@ -28,7 +28,7 @@ const Experience = () => {
         </h2>
 
         {/* Software Engineer - CISDD */}
-        <div className="card-float bg-black border border-gray-800 rounded-xl p-6 sm:p-8 mb-6 hover:bg-gray-900 transition-all duration-300">
+        <div className="card-float bg-black border border-gray-800 rounded-xl p-6 sm:p-8 mb-6 hover:transform hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
           <div className="mb-4">
             <div className="flex justify-between items-start mb-4">
               <div className="flex-1">
@@ -96,7 +96,7 @@ const Experience = () => {
         </div>
 
         {/* Machine Learning Engineer Intern - Rad AI */}
-        <div className="card-float bg-black border border-gray-800 rounded-xl p-6 sm:p-8 mb-6 hover:bg-gray-900 transition-all duration-300">
+        <div className="card-float bg-black border border-gray-800 rounded-xl p-6 sm:p-8 mb-6 hover:transform hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
           <div className="mb-4">
             <div className="flex justify-between items-start mb-4">
               <div className="flex-1">
@@ -154,7 +154,7 @@ const Experience = () => {
         </div>
 
         {/* Software Engineer Intern - Lob */}
-        <div className="card-float bg-black border border-gray-800 rounded-xl p-6 sm:p-8 mb-6 hover:bg-gray-900 transition-all duration-300">
+        <div className="card-float bg-black border border-gray-800 rounded-xl p-6 sm:p-8 mb-6 hover:transform hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
           <div className="mb-4">
             <div className="flex justify-between items-start mb-4">
               <div className="flex-1">
